@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>mybatis测试</title>
+</head>
+<body>
+<table align="center" border="1" cellpadding="0">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>detail</td>
+    </tr>
+    <tr th:each="test, testStat:${ts}">
+        <td th:text="${test.getId()}"></td>
+        <td th:text="${test.getName()}"></td>
+        <td th:text="${test.getDetail()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

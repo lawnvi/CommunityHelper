@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>SchoolShowHelp</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>picPath</td>
+        <td>name</td>
+        <td>price</td>
+        <td>detail</td>
+        <td>location</td>
+        <td>like</td>
+        <td>time</td>
+    </tr>
+
+    <tr th:each="goods, goodsStat:${goodslist}">
+        <td th:text="${goods.getPicturePath()}"></td>
+        <td th:text="${goods.getTitle()}"></td>
+        <td th:text="${goods.getPrice()}"></td>
+        <td th:text="${goods.getDetail()}"></td>
+        <td th:text="${goods.getLocation()}"></td>
+        <td th:text="${goods.getLike()}"></td>
+        <td th:text="${goods.getTime()}"></td>
+    </tr>
+
+</table>
+
+</body>
+</html>
