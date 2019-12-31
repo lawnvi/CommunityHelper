@@ -3,7 +3,7 @@ package com.buct.showhelp.pojo;
 /**
  * 用户对象
  */
-public class User {
+public class Users {
     private String id;
     private String name;
     private String number;
@@ -12,6 +12,15 @@ public class User {
     private String address;
     private String email;
     private String school;
+    private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     public String getId() {
         return id;

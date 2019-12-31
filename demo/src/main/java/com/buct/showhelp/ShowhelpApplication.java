@@ -3,7 +3,7 @@ package com.buct.showhelp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"com.buct.showhelp.service"})
 public class ShowhelpApplication {
 
     public static void main(String[] args) {

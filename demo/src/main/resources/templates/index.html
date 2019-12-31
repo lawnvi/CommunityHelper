@@ -7,7 +7,6 @@
 <body>
 <table>
     <tr>
-        <td>picPath</td>
         <td>name</td>
         <td>price</td>
         <td>detail</td>
@@ -17,7 +16,6 @@
     </tr>
 
     <tr th:each="goods, goodsStat:${goodslist}">
-        <td th:text="${goods.getPicturePath()}"></td>
         <td th:text="${goods.getTitle()}"></td>
         <td th:text="${goods.getPrice()}"></td>
         <td th:text="${goods.getDetail()}"></td>

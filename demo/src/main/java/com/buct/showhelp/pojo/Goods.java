@@ -1,7 +1,5 @@
 package com.buct.showhelp.pojo;
 
-import java.sql.Blob;
-
 public class Goods {
     private String id;
     private String title;
@@ -12,6 +10,15 @@ public class Goods {
     private String status;
     private int like;
     private String time;//发布时间
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public String getPicturePath() {
         return picturePath;
