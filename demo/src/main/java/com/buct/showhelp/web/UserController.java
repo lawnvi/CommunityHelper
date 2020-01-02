@@ -32,6 +32,7 @@ public class UserController {
         System.out.println(email +" "+psw);
         if(users != null){
             request.getSession().setAttribute("Session_user", users);
+            request.getSession().setMaxInactiveInterval(3600);
             return "redirect:../index";
         }
         return "loginError";
@@ -47,11 +48,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("register")
-    public String userRegister(@RequestParam("name") String name, @RequestParam("password") String psw, @RequestParam("password2") String psw2){
+    public String userRegister(@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("password") String psw, @RequestParam("password2") String psw2){
         if(!psw.equals(psw2)){
             return "密码不一致，请确认密码再注册！";
         }
-        int result = userService.userRegister(name, psw);
+        int result = userService.userRegister(name, psw, email);
         if(result == 0){
             return "注册失败！";
         } else {

@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     //注册新用户
     @Override
-    public int userRegister(String username,String password){
-        return usermapper.userRegister(username, password);
+    public int userRegister(String username, String password, String email){
+        return usermapper.userRegister(username, password, email);
     }
 }
