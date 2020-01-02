@@ -2,15 +2,12 @@ package com.buct.showhelp.web;
 
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -30,11 +27,12 @@ public class UserController {
      * 获取name, psw，login
      */
     @RequestMapping("/login")
-    public String userLogin(@RequestParam("number") String number, @RequestParam("password") String psw, HttpServletRequest request){
-        Users users = userService.userLogin(number, psw);
+    public String userLogin(@RequestParam("email") String email, @RequestParam("password") String psw, HttpServletRequest request){
+        Users users = userService.userLogin(email, psw);
+        System.out.println(email +" "+psw);
         if(users != null){
-            request.getSession().setAttribute("session_user", users);
-            return "index";
+            request.getSession().setAttribute("Session_user", users);
+            return "redirect:../index";
         }
         return "loginError";
     }
@@ -57,7 +55,7 @@ public class UserController {
         if(result == 0){
             return "注册失败！";
         } else {
-            return "注册成功！";
+            return result+"注册成功！";
         }
     }
 }

@@ -1,16 +1,34 @@
 package com.buct.showhelp.pojo;
 
 public class Goods {
-    private String id;
+    private int id;
     private String title;
     private String detail;
-    private int price;
+    private double price;
     private String purchaseUrl;
     private String location;
     private String status;
     private int like;
     private String time;//发布时间
     private int number;
+    private int visit;
+    private int sellerid;
+
+    public int getSellerid() {
+        return sellerid;
+    }
+
+    public void setSellerid(int sellerid) {
+        this.sellerid = sellerid;
+    }
+
+    public int getVisit() {
+        return visit;
+    }
+
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
 
     public int getNumber() {
         return number;
@@ -38,11 +56,11 @@ public class Goods {
         this.time = time;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,11 +80,11 @@ public class Goods {
         this.detail = detail;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

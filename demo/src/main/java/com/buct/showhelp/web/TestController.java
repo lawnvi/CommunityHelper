@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestController {
     @Autowired
-    TestMapper testMapper;
+    private TestMapper testMapper;
 
     @RequestMapping("/listTest")
     public String listCategory(Model m) throws Exception {

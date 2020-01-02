@@ -2,79 +2,72 @@ package com.buct.showhelp.web;
 
 import com.buct.showhelp.mapper.GoodsMapper;
 import com.buct.showhelp.pojo.Goods;
+import com.buct.showhelp.pojo.Users;
+import com.buct.showhelp.service.GoodsService;
+import org.apache.catalina.Session;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import sun.misc.Request;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class GoodsController {
     @Autowired
-    GoodsMapper goodsMapper;
+    GoodsService goodsService;
+    static Users users;
 
     @RequestMapping("/index")
-    public String listOnSaleGoods(Model model){
-        List<Goods> list = goodsMapper.findOnSaleGoods();
+    public String listOnSaleGoods(Model model, HttpSession session){
+        List<Goods> list = goodsService.findOnSaleGoods();
         model.addAttribute("goodslist", list);
+        users = (Users) session.getAttribute("Session_user");
+        if(users != null) {
+            model.addAttribute("user", users.getName());
+        }
+        else {
+            model.addAttribute("user", "请登录");
+        }
         return "index";
     }
 
-    public static class Saled {
-        String id;
-        String sellerId;
-        String buyerId;
-        String goodsId;
-        String saleTime;
-        String price;
+    @RequestMapping("/myGoods")
+    public String listMyGoods(Model model){
+        List<Goods> list = goodsService.findMyOnSaleGoods(users.getId());
+        model.addAttribute("goodslist", list);
+        model.addAttribute("user", users.getName());
+        return "myGoods";
+    }
 
-        public String getId() {
-            return id;
-        }
+    @RequestMapping("/myGoods/addGoodsPage")
+    public String addGoodsPage(){
+        return "addGoods";
+    }
 
-        public void setId(String id) {
-            this.id = id;
+//    title detail price purchaseUrl location number
+    @RequestMapping("/myGoods/addGoods")
+    public String addGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
+                        @RequestParam("price") double price, @RequestParam("purchaseUrl") String purchaseUrl,
+                        @RequestParam("location") String location, @RequestParam("number") int number){
+        Goods goods = new Goods();
+        goods.setTitle(title);
+        goods.setDetail(detail);
+        goods.setLocation(location);
+        goods.setNumber(number);
+        goods.setPurchaseUrl(purchaseUrl);
+        goods.setPrice(price);
+        goods.setSellerid(users.getId());
+        int result = goodsService.addGoods(goods);
+        if(result == 0){
+            return "error";
         }
-
-        public String getSellerId() {
-            return sellerId;
-        }
-
-        public void setSellerId(String sellerId) {
-            this.sellerId = sellerId;
-        }
-
-        public String getBuyerId() {
-            return buyerId;
-        }
-
-        public void setBuyerId(String buyerId) {
-            this.buyerId = buyerId;
-        }
-
-        public String getGoodsId() {
-            return goodsId;
-        }
-
-        public void setGoodsId(String goodsId) {
-            this.goodsId = goodsId;
-        }
-
-        public String getSaleTime() {
-            return saleTime;
-        }
-
-        public void setSaleTime(String saleTime) {
-            this.saleTime = saleTime;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
+        return "redirect:../myGoods";
     }
 }

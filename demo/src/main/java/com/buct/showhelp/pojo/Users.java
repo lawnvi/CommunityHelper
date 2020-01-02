@@ -2,9 +2,10 @@ package com.buct.showhelp.pojo;
 
 /**
  * 用户对象
+ * id name number password tel address email school ip
  */
 public class Users {
-    private String id;
+    private int id;
     private String name;
     private String number;
     private String password;
@@ -13,6 +14,15 @@ public class Users {
     private String email;
     private String school;
     private String ip;
+    private String picturePath;
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
 
     public String getIp() {
         return ip;
@@ -22,11 +32,11 @@ public class Users {
         this.ip = ip;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
