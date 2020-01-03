@@ -5,12 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<h th:text="${user.getName()}"/>
+<div >
+    <a href="/user/updateUserPage">修改</a>
+    <a href="/user/changePasswordPage">修改密码</a>
+</div>
+昵称：<h th:text="${user.getName()}"/>
 <p th:text="${user.getPicturePath()}"/>
 邮箱：<p th:text="${user.getEmail()}"/>
 电话：<p th:text="${user.getTel()}"/>
 学校：<p th:text="${user.getSchool()}"/>
 地址：<p th:text="${user.getAddress()}"/>
-
 </body>
 </html>

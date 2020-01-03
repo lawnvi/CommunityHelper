@@ -17,13 +17,27 @@ public class UserServiceImpl implements UserService {
     //用户登录
     @Override
     public Users userLogin(String email,String password){
-        Users user = usermapper.userLogin(email, password);
-        return user;
+        return usermapper.userLogin(email, password);
     }
 
     //注册新用户
     @Override
     public int userRegister(String username, String password, String email){
         return usermapper.userRegister(username, password, email);
+    }
+
+    @Override
+    public int updateUser(Users users) {
+        return usermapper.updateUser(users);
+    }
+
+    @Override
+    public int changePassword(int id, String psw) {
+        return usermapper.changePassword(id, psw);
+    }
+
+    @Override
+    public Users findUserById(int id) {
+        return usermapper.findUserById(id);
     }
 }

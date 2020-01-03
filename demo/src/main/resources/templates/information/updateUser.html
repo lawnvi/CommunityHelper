@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改个人信息</title>
+</head>
+<body>
+<form action="/user/updateUser" method="post">
+    昵称：<input th:value="${user.getName()}" name="name"/>
+    头像：<input th:value="${user.getPicturePath()}" name="picturePath"/>
+    电话：<input th:value="${user.getTel()}" name="tel"/>
+    学校：<input th:value="${user.getSchool()}" name="school"/>
+    地址：<input th:value="${user.getAddress()}" name="address"/>
+    <input name="id" type="hidden" th:value="${user.getId()}">
+    <input type="submit" value="保存">
+</form>
+</body>
+</html>

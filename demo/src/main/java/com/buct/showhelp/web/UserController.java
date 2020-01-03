@@ -2,6 +2,7 @@ package com.buct.showhelp.web;
 
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.UserService;
+import com.buct.showhelp.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ public class UserController {
         Users users = userService.userLogin(email, psw);
         System.out.println(email +" "+psw);
         if(users != null){
+            users.setPassword("");
             request.getSession().setAttribute("Session_user", users);
 //            request.getSession().setMaxInactiveInterval(0);
             return "redirect:../index";
@@ -66,9 +68,57 @@ public class UserController {
      */
     @RequestMapping("/myInformation")
     public String showMyInformation(Model model, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Users user = (Users) session.getAttribute("Session_user");
-        model.addAttribute("user", user);
+        model.addAttribute("user", Utils.getUserSession(request));
         return "information/myInformation";
+    }
+
+    /**
+     * 修改信息
+     */
+    @RequestMapping("/updateUserPage")
+    public String updateUserPage(Model model, HttpServletRequest request){
+        model.addAttribute("user", Utils.getUserSession(request));
+        return "information/updateUser";
+    }
+    @RequestMapping("/updateUser")
+    public String updateUser(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("address") String address,
+                             @RequestParam("tel") String tel, @RequestParam("school") String school, @RequestParam("picturePath") String picturePath){
+        Users users = new Users();
+        users.setId(id);
+        users.setAddress(address);
+        users.setName(name);
+        users.setTel(tel);
+        users.setSchool(school);
+        users.setPicturePath(picturePath);
+        users.setEmail(Utils.getUserSession(request).getEmail());
+        int result = userService.updateUser(users);
+        if(result == 0)
+            return "更新失败";
+        request.getSession().setAttribute("Session_user", users);
+        return "redirect:./myInformation";
+    }
+
+    /**
+     * 修改密码
+     */
+    @RequestMapping("/changePasswordPage")
+    public String changePasswordPage(){
+        return "information/changePassword";
+    }
+    @RequestMapping("/changePassword")
+    public String changePassword(@RequestParam("oldPassword") String psw,
+                                 @RequestParam("newPassword1") String psw1,
+                                 @RequestParam("newPassword2") String psw2,
+                                 HttpServletRequest request){
+//        userService.findUserById(Utils.getUserSession(request).getId())
+        if(!psw1.equals(psw2)){
+            //todo 弹窗
+            return "确认密码不一致";
+        }
+        if(!psw.equals(userService.findUserById(Utils.getUserSession(request).getId()).getPassword())){
+            return "原密码错误";
+        }
+        userService.changePassword(Utils.getUserSession(request).getId(), psw1);
+        return "redirect:./myInformation";
     }
 }
