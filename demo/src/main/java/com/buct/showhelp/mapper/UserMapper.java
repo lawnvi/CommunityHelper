@@ -13,7 +13,7 @@ public interface UserMapper {
     Users userLogin(@Param("email") String email, @Param("password") String password);
 
 //    name number password tel address email school ip picturePath
-    @Insert("insert into users (name, password, email, number, address, school, ip, picture_path) values(#{name}, #{password}, #{email}, '', '', '', '', '')")
+    @Insert("insert into users (name, password, email, picture_path) values(#{name}, #{password}, #{email}, '')")
     int userRegister(@Param("name") String name, @Param("password") String password, @Param("email") String email);
 
     //CURD

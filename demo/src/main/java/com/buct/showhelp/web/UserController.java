@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("user")
@@ -32,7 +33,7 @@ public class UserController {
         System.out.println(email +" "+psw);
         if(users != null){
             request.getSession().setAttribute("Session_user", users);
-            request.getSession().setMaxInactiveInterval(3600);
+//            request.getSession().setMaxInactiveInterval(0);
             return "redirect:../index";
         }
         return "loginError";
@@ -58,5 +59,16 @@ public class UserController {
         } else {
             return result+"注册成功！";
         }
+    }
+
+    /**
+     * 我的信息
+     */
+    @RequestMapping("/myInformation")
+    public String showMyInformation(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Users user = (Users) session.getAttribute("Session_user");
+        model.addAttribute("user", user);
+        return "information/myInformation";
     }
 }

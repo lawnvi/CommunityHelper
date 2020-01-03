@@ -31,5 +31,20 @@ public class GoodsServiceImpl implements GoodsService {
         return result;
     }
 
+    @Override
+    public int updateGoods(Goods goods) {
+        int result = goodsMapper.updateGoods(goods);
+        return result;
+    }
 
+    @Override
+    public int updateGoodsStatus(Goods goods) {
+        int result = goodsMapper.updateGoodsStatus(goods);
+        return result;
+    }
+
+    @Override
+    public Goods findGoodsById(int id) {
+        return goodsMapper.findGoodsById(id);
+    }
 }

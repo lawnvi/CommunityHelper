@@ -7,7 +7,7 @@ package com.buct.showhelp.pojo;
 public class Users {
     private int id;
     private String name;
-    private String number;
+    //private String number;
     private String password;
     private String tel;
     private String address;
@@ -46,14 +46,6 @@ public class Users {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public String getPassword() {

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h th:text="${user.getName()}"/>
+<p th:text="${user.getPicturePath()}"/>
+邮箱：<p th:text="${user.getEmail()}"/>
+电话：<p th:text="${user.getTel()}"/>
+学校：<p th:text="${user.getSchool()}"/>
+地址：<p th:text="${user.getAddress()}"/>
+
+</body>
+</html>

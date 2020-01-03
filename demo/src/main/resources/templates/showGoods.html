@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div >
+    <a href="index">home</a>
+    <a href="myGoods">goods</a>
+    <a href="chat">chat</a>
+    <a href="myInformation">我的信息</a>
+</div>
+<!--照片：<p th:text="${oneGoods.getPicturePath()}"></p>-->
+题目：<p th:text="${oneGoods.getTitle()}"></p>
+价格：<p th:text="${oneGoods.getPrice()}"></p>
+数量：<p th:text="${oneGoods.getNumber()}"></p>
+状态：<p th:text="${oneGoods.getStatus()}"></p>
+详情：<p th:text="${oneGoods.getDetail()}"></p>
+链接：<p th:text="${oneGoods.getPurchaseUrl()}"></p>
+地点：<p th:text="${oneGoods.getLocation()}"></p>
+想要：<p th:text="${oneGoods.getLike()}"></p>
+访问：<p th:text="${oneGoods.getVisit()}"></p>
+<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">更新</a>
+<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">分享</a>
+<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">留言</a>
+<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">喜欢</a>
+</body>
+</html>

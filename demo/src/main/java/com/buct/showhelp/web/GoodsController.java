@@ -31,9 +31,11 @@ public class GoodsController {
         users = (Users) session.getAttribute("Session_user");
         if(users != null) {
             model.addAttribute("user", users.getName());
+            model.addAttribute("url", "/myInformation/");
         }
         else {
             model.addAttribute("user", "请登录");
+            model.addAttribute("url", "/user/");
         }
         return "index";
     }
@@ -70,4 +72,49 @@ public class GoodsController {
         }
         return "redirect:../myGoods";
     }
+
+    //展示修改页面
+    @RequestMapping("/myGoods/updateGoodsPage")
+    public String showUpdateGoodsPage(@RequestParam("id") int id, Model model){
+        model.addAttribute("updateGoods", goodsService.findGoodsById(id));
+        return "updateGoodsPage";
+    }
+
+    //更新某物品
+    @RequestMapping("/myGoods/updateGoods")
+    public String updateGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
+                              @RequestParam("price") double price, @RequestParam("purchaseUrl") String purchaseUrl,
+                              @RequestParam("location") String location, @RequestParam("number") int number,
+                              @RequestParam("id") int id){
+        Goods goods = new Goods();
+        goods.setId(id);
+        goods.setTitle(title);
+        goods.setDetail(detail);
+        goods.setLocation(location);
+        goods.setNumber(number);
+        goods.setPurchaseUrl(purchaseUrl);
+        goods.setPrice(price);
+        goods.setSellerid(users.getId());
+        int result = goodsService.updateGoods(goods);
+        if(result == 0){
+            return "修改失败";
+        }
+        return "redirect:../showGoods?id="+goods.getId();
+    }
+
+    //更新状态 点赞、访问<-局部刷新 在售状态变化
+
+    //展示一个物品
+    @RequestMapping("/showGoods")
+    public String showOneGoods(Model model, @RequestParam("id") int id){
+        Goods goods = goodsService.findGoodsById(id);
+        model.addAttribute("oneGoods", goods);
+        // todo if isMine change page to edit else want and chat
+        if(users.getId() == goods.getSellerid())
+            model.addAttribute("ismine", true);
+        else
+            model.addAttribute("ismine", false);
+        return "showGoods";
+    }
+
 }

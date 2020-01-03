@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/myGoods/updateGoods" method="post">
+    标题:<input name="title" type="text" th:value="${updateGoods.getTitle()}"><br/>
+    描述:<input name="detail" type="text" th:value="${updateGoods.getDetail()}"/><br/>
+    价格:<input name="price" type="text" th:value="${updateGoods.getPrice()}"/><br/>
+    链接:<input name="purchaseUrl" type="text" th:value="${updateGoods.getPurchaseUrl()}"/><br/>
+    地点:<input name="location" type="text" th:value="${updateGoods.getLocation()}"/><br/>
+    数量:<input name="number" type="text" th:value="${updateGoods.getNumber()}"/><br/>
+    <input name="id" type="hidden" th:value="${updateGoods.getId()}">
+<!--    图片:<input name="picture_path" type="text" th:value="${updateGoods.getPicturePath()}"/><br/>-->
+    <input type="submit" value="更新"/>
+</form>
+</body>
+</html>
