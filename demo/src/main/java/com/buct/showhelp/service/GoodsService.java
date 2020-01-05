@@ -9,7 +9,7 @@ public interface GoodsService {
     List<Goods> findOnSaleGoods();
 
     //我的货物
-    List<Goods> findMyOnSaleGoods(int id);
+    List<Goods> findGoodsByStatus(int id, String status);
 
     //添加闲置
     int addGoods(Goods goods);
@@ -22,4 +22,16 @@ public interface GoodsService {
 
     //以id获取一个物品
     Goods findGoodsById(int id);
+
+    //delete goods
+    int delete(int id);
+
+    /**
+     * asBuyer
+     */
+    //交易物品
+    int buyGoods(int buyerid, int goodsid, String time, String status);
+
+    //as buyer get goods like 买到的物品
+    List<Goods> findWantByStatus(int buyerid, String status);
 }

@@ -1,28 +1,37 @@
 package com.buct.showhelp.web;
 
 import com.buct.showhelp.mapper.GoodsMapper;
+import com.buct.showhelp.mapper.OrdersMapper;
 import com.buct.showhelp.pojo.Goods;
+import com.buct.showhelp.pojo.Orders;
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.GoodsService;
+import com.buct.showhelp.service.OrderService;
+import com.buct.showhelp.utils.Global;
+import com.buct.showhelp.utils.Utils;
 import org.apache.catalina.Session;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import sun.misc.Request;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class GoodsController {
     @Autowired
-    GoodsService goodsService;
+    private GoodsService goodsService;
+
+    @Autowired
+    private OrderService orderService;
     static Users users;
+
+//    todo 分页 判断自己的物品
 
     @RequestMapping("/index")
     public String listOnSaleGoods(Model model, HttpSession session){
@@ -41,11 +50,62 @@ public class GoodsController {
     }
 
     @RequestMapping("/myGoods")
-    public String listMyGoods(Model model){
-        List<Goods> list = goodsService.findMyOnSaleGoods(users.getId());
+    public String listMyGoods(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findGoodsByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_ON_SALE);
         model.addAttribute("goodslist", list);
-        model.addAttribute("user", users.getName());
+        model.addAttribute("user", Utils.getUserSession(request).getName());
         return "myGoods";
+    }
+
+    @RequestMapping("/myGoods/offLineGoodsPage")
+    public String hidingGoods(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findGoodsByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_HIDING);
+        model.addAttribute("goodslist", list);
+        model.addAttribute("user", Utils.getUserSession(request).getName());
+        return "/goods/offLineGoods";
+    }
+    @RequestMapping("/myGoods/offLineGoods")
+    public String hidingGoods(@RequestParam("id") int id){
+        Goods goods = goodsService.findGoodsById(id);
+        goods.setStatus(Global.GOODS_STATUS_HIDING);
+        goodsService.updateGoodsStatus(goods);
+        return "redirect:../myGoods";
+    }
+    @RequestMapping("/myGoods/onLineGoods")
+    public String onSaleGoods(@RequestParam("id") int id){
+        Goods goods = goodsService.findGoodsById(id);
+        goods.setStatus(Global.GOODS_STATUS_ON_SALE);
+        goodsService.updateGoodsStatus(goods);
+        return "redirect:./offLineGoodsPage";
+    }
+
+    @RequestMapping("/myGoods/deleteGoods")
+    public String deleteGoods(@RequestParam("id") int id, @RequestParam("page") String page){
+        goodsService.delete(id);
+        if(page.equals(Global.GOODS_STATUS_ON_SALE))
+            return "redirect:../myGoods";
+        else
+            return "redirect:./offLineGoodsPage";
+    }
+
+    @RequestMapping("/myGoods/dealingGoods")
+    public String dealingGoods(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findGoodsByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_LOCK);
+        for (Goods goods: list) {
+            goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_WAITING).getId());
+        }
+
+        model.addAttribute("goodslist", list);
+        model.addAttribute("user", Utils.getUserSession(request).getName());
+        return "/goods/dealingGoods";
+    }
+
+    @RequestMapping("/myGoods/soldGoods")
+    public String soldGoods(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findGoodsByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_SOLD);
+        model.addAttribute("goodslist", list);
+        model.addAttribute("user", Utils.getUserSession(request).getName());
+        return "/goods/soldGoods";
     }
 
     @RequestMapping("/myGoods/addGoodsPage")
@@ -56,7 +116,7 @@ public class GoodsController {
 //    title detail price purchaseUrl location number
     @RequestMapping("/myGoods/addGoods")
     public String addGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
-                        @RequestParam("price") double price, @RequestParam("purchaseUrl") String purchaseUrl,
+                        @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
                         @RequestParam("location") String location, @RequestParam("number") int number){
         Goods goods = new Goods();
         goods.setTitle(title);
@@ -83,7 +143,7 @@ public class GoodsController {
     //更新某物品
     @RequestMapping("/myGoods/updateGoods")
     public String updateGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
-                              @RequestParam("price") double price, @RequestParam("purchaseUrl") String purchaseUrl,
+                              @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
                               @RequestParam("location") String location, @RequestParam("number") int number,
                               @RequestParam("id") int id){
         Goods goods = new Goods();
@@ -115,6 +175,84 @@ public class GoodsController {
         else
             model.addAttribute("ismine", false);
         return "showGoods";
+    }
+
+    /**
+     * 交易相关
+     */
+    @RequestMapping("/buyGoods")
+    public String buyGoods(@RequestParam("goodsid") int goodsid, HttpServletRequest request){
+        Goods goods = goodsService.findGoodsById(goodsid);
+        if(!goods.getStatus().equals(Global.GOODS_STATUS_ON_SALE)) {
+            return "没有了额";
+        }
+        Users user = Utils.getUserSession(request);
+        goodsService.buyGoods(user.getId(), goodsid, Utils.getTime(), Global.GOODS_STATUS_LOCK);
+        Orders order = new Orders();
+        order.setBuyerId(user.getId());
+        order.setGoodsId(goodsid);
+        order.setPrice(goods.getPrice());
+        order.setSellerId(goods.getSellerid());
+        order.setContent(user.getName()+"请求交易,等待卖家回复进行线下交易");
+        orderService.addOrder(order);
+        //todo email and dialog
+        return "redirect:/asBuyer/request";
+    }
+
+    //buyer cancel reason
+    @RequestMapping("/buyGoods/buyerCancel")
+    public String buyerCancelDeal(@RequestParam("id") int orderId, @RequestParam("content") String content){
+        orderService.updateOrder(orderId, Global.ORDER_STATUS_BUYER_CANCEL, "买家取消/n"+content);
+        Orders orders = orderService.findOrdersById(orderId);
+        Goods goods = goodsService.findGoodsById(orders.getGoodsId());
+        goods.setStatus(Global.GOODS_STATUS_ON_SALE);
+        goodsService.updateGoodsStatus(goods);
+        return "redirect:/asBuyer/request";
+    }
+
+    //seller refuse
+    @RequestMapping("/buyGoods/sellerCancel")
+    public String sellerCancelDeal(@RequestParam("id") int orderId, @RequestParam("content") String content){
+        orderService.updateOrder(orderId, Global.ORDER_STATUS_SELLER_CANCEL, "卖家取消/n"+content);
+        Orders orders = orderService.findOrdersById(orderId);
+        Goods goods = goodsService.findGoodsById(orders.getGoodsId());
+        goods.setStatus(Global.GOODS_STATUS_ON_SALE);
+        goodsService.updateGoodsStatus(goods);
+        return "redirect:/myGoods/dealingGoods";
+    }
+
+    //success
+    //seller refuse
+    @RequestMapping("/buyGoods/accept")
+    public String gotDeal(@RequestParam("id") int orderId, @RequestParam("content") String content){
+        orderService.updateOrder(orderId, Global.ORDER_STATUS_SELLER_CANCEL, "交易成功/n"+content);
+        Orders orders = orderService.findOrdersById(orderId);
+        Goods goods = goodsService.findGoodsById(orders.getGoodsId());
+        goods.setStatus(Global.GOODS_STATUS_SOLD);
+        goodsService.updateGoodsStatus(goods);
+        return "redirect:/myGoods/dealingGoods";
+    }
+    /**
+     * 我买到的
+     */
+    @RequestMapping("/asBuyer/order")
+    public String showMyOrder(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findWantByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_SOLD);
+        for (Goods goods: list) {
+            goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_WAITING).getId());
+        }
+        model.addAttribute("goodsList", list);
+        return "asBuyer/showMyOrder";
+    }
+
+    @RequestMapping("/asBuyer/request")
+    public String showMyRequest(Model model, HttpServletRequest request){
+        List<Goods> list = goodsService.findWantByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_LOCK);
+        for (Goods goods: list) {
+            goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_WAITING).getId());
+        }
+        model.addAttribute("goodsList", list);
+        return "asBuyer/showMyRequest";
     }
 
 }

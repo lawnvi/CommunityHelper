@@ -19,11 +19,12 @@
 详情：<p th:text="${oneGoods.getDetail()}"></p>
 链接：<p th:text="${oneGoods.getPurchaseUrl()}"></p>
 地点：<p th:text="${oneGoods.getLocation()}"></p>
-想要：<p th:text="${oneGoods.getLike()}"></p>
+想要：<p th:text="${oneGoods.getStar()}"></p>
 访问：<p th:text="${oneGoods.getVisit()}"></p>
 <a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">更新</a>
 <a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">分享</a>
 <a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">留言</a>
 <a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">喜欢</a>
+<a th:href="@{/buyGoods(goodsid=${oneGoods.getId()})}">购买</a>
 </body>
 </html>

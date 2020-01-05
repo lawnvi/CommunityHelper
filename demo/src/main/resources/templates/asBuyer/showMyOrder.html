@@ -6,14 +6,16 @@
 </head>
 <body>
 <!--todo user session login-->
-<a th:href="${url}" ><p th:text="${user}"></p></a>
-<a href="/user/logout">注销</a>
 <div >
     <a href="/index">home</a>
     <a href="/myGoods">goods</a>
-    <a href="/asBuyer/request">我买到的</a>
+    <a href="/asBuyer">我买到的</a>
     <a href="/chat">chat</a>
     <a href="/user/myInformation">我的信息</a>
+</div>
+<div>
+    <a href="/asBuyer/order">我的订单</a>
+    <a href="/asBuyer/request">我的请求</a>
 </div>
 <table>
     <tr>
@@ -21,17 +23,18 @@
         <td>price</td>
         <td>detail</td>
         <td>location</td>
-        <td>star</td>
-        <td>time</td>
+        <td>buyer</td>
+        <td>seller</td>
+        <td>deal_time</td>
     </tr>
 
-    <tr th:each="goods, goodsStat:${goodslist}">
+    <tr th:each="goods, goodsStat:${goodsList}">
         <td th:text="${goods.getTitle()}"></td>
         <td th:text="${goods.getPrice()}"></td>
         <td th:text="${goods.getDetail()}"></td>
         <td th:text="${goods.getLocation()}"></td>
-        <td th:text="${goods.getStar()}"></td>
-        <td th:text="${goods.getTime()}"></td>
+        <td th:text="${goods.getBuyerid()}"></td>
+        <td th:text="${goods.getSellerid()}"></td>
         <td><a th:href="@{/showGoods(id=${goods.getId()})}">详情</a> </td>
     </tr>
 

@@ -4,15 +4,33 @@ public class Goods {
     private int id;
     private String title;
     private String detail;
-    private double price;
+    private float price;
     private String purchaseUrl;
     private String location;
     private String status;
-    private int like;
+    private int star;
     private String time;//发布时间
     private int number;
     private int visit;
     private int sellerid;
+    private int buyerid;
+    private int orderIdBuffer;
+
+    public int getOrderIdBuffer() {
+        return orderIdBuffer;
+    }
+
+    public void setOrderIdBuffer(int orderIdBuffer) {
+        this.orderIdBuffer = orderIdBuffer;
+    }
+
+    public int getBuyerid() {
+        return buyerid;
+    }
+
+    public void setBuyerid(int buyerid) {
+        this.buyerid = buyerid;
+    }
 
     public int getSellerid() {
         return sellerid;
@@ -80,11 +98,11 @@ public class Goods {
         this.detail = detail;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -112,11 +130,11 @@ public class Goods {
         this.status = status;
     }
 
-    public int getLike() {
-        return like;
+    public int getStar() {
+        return star;
     }
 
-    public void setLike(int like) {
-        this.like = like;
+    public void setStar(int star) {
+        this.star = star;
     }
 }

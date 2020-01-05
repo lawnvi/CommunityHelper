@@ -41,6 +41,13 @@ public class UserController {
         return "loginError";
     }
 
+    //logout
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/user/";
+    }
+
     @RequestMapping("/registerpage")
     public String registerPage(){
         return "register";

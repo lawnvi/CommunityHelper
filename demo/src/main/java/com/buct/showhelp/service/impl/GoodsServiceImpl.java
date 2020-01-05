@@ -6,6 +6,7 @@ import com.buct.showhelp.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,8 +21,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> findMyOnSaleGoods(int id) {
-        List<Goods> list = goodsMapper.findMyOnSaleGoods(id);
+    public List<Goods> findGoodsByStatus(int id, String status) {
+        List<Goods> list = goodsMapper.findGoodsByStatus(id, status);
         return list;
     }
 
@@ -46,5 +47,20 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Goods findGoodsById(int id) {
         return goodsMapper.findGoodsById(id);
+    }
+
+    @Override
+    public int delete(int id) {
+        return goodsMapper.deleteGoods(id);
+    }
+
+    @Override
+    public int buyGoods(int buyerid, int goodsid, String time, String status) {
+        return goodsMapper.buyGoods(buyerid, goodsid, time, status);
+    }
+
+    @Override
+    public List<Goods> findWantByStatus(int buyerid, String status) {
+        return goodsMapper.findGoodsByBuyerId(buyerid, status);
     }
 }

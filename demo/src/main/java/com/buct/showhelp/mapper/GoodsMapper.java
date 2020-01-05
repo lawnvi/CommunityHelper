@@ -1,25 +1,27 @@
 package com.buct.showhelp.mapper;
 
 import com.buct.showhelp.pojo.Goods;
-import com.buct.showhelp.pojo.Users;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface GoodsMapper {
+    /**
+     * asUser
+     */
     //获取在售商品
     @Select("select * from goods where status = 'on_sale' ")
     List<Goods> findOnSaleGoods();
 
     //获取所有商品
 
-    //获取我的在售
-    @Select("select * from goods where status = 'on_sale' and sellerid = #{sellerid}")
-    List<Goods> findMyOnSaleGoods(int sellerid);
+    /**
+     * asSeller
+     */
+    //按物品状态获取
+    @Select("select * from goods where status = #{status} and sellerid = #{sellerid}")
+    List<Goods> findGoodsByStatus(int sellerid, String status);
 
 //  title detail price purchaseUrl location number
     //上架
@@ -32,11 +34,25 @@ public interface GoodsMapper {
     int updateGoods(Goods goods);
 
     // 更新喜欢、访问、状态
-    @Update("update Goods set like = #{like}, visit = #{visit}, status = #{status} where id = #{id}")
+    @Update("update goods set star = #{star}, visit = #{visit}, status = #{status} where id = #{id}")
     int updateGoodsStatus(Goods goods);
+
+    //delete a goods
+    @Delete("delete from goods where id = #{id}")
+    int deleteGoods(int id);
 
     //获取一个物品
     @Select("select * from goods where id = #{id}")
     Goods findGoodsById(int id);
 
+    /**
+     * asBuyer
+     */
+    //购买
+    @Update("update goods set buyerid = #{buyerid}, selltime = #{time}, status = #{status} where id = #{goodsid}")
+    int buyGoods(int buyerid, int goodsid, String time, String status);
+
+    //获取我的订单
+    @Select("select * from goods where status = #{status} and buyerid = #{buyerid}")
+    List<Goods> findGoodsByBuyerId(int buyerid, String status);
 }
