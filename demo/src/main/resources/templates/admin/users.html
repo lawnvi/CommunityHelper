@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div>
+    <a href="/admin/logs">网站状态</a>
+    <a href="/admin/users">用户管理</a>
+    <a href="/admin/goods">物品管理</a>
+    <a href="/admin/orders">订单管理</a>
+    <a href="/admin/notice">公告管理</a>
+    <a href="/admin/setting">后台设置</a>
+</div>
+<a href="/user/">网站登录</a>
+
+<table>
+    <th>
+    <td>id</td>
+    <td>name</td>
+    <td>邮箱</td>
+    <td>tel</td>
+    <td>password</td>
+    <td>学校</td>
+    <td>地址</td>
+    </th>
+    <tr th:each="obj, objStat:${usersList}">
+        <td th:text="${obj.getId()}">id</td>
+        <td th:text="${obj.getName()}">date</td>
+        <td th:text="${obj.getEmail()}">visit</td>
+        <td th:text="${obj.getTel()}">user</td>
+        <td th:text="${obj.getPassword()}">failedDeal</td>
+        <td th:text="${obj.getSchool()}">goods</td>
+        <td th:text="${obj.getAddress()}">successDeal</td>
+    </tr>
+</table>
+</body>
+</html>

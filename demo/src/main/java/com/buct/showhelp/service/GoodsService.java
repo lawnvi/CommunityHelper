@@ -34,4 +34,6 @@ public interface GoodsService {
 
     //as buyer get goods like 买到的物品
     List<Goods> findWantByStatus(int buyerid, String status);
+
+    List<Goods> findAllGoods();
 }

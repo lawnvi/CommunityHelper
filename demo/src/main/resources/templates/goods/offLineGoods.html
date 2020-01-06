@@ -9,15 +9,16 @@
 <div >
     <a href="/index">home</a>
     <a href="/myGoods">goods</a>
-    <a href="/chat">chat</a>
-    <a href="/myInformation">我的信息</a>
+    <a href="/asBuyer/request">我买到的</a>
+    <a href="/tips/noPage">chat</a>
+    <a href="/user/myInformation">我的信息</a>
 </div>
 <span> <a href="/myGoods/addGoodsPage">上架</a> </span>
 <div>
     <a href="/myGoods">在架</a>
     <a href="/myGoods/offLineGoodsPage">下架</a>
-    <a href="/myGoods/dealing">交易中</a>
-    <a href="/myGoods/order">交易完成</a>
+    <a href="/myGoods/dealingGoods">交易中</a>
+    <a href="/myGoods/soldGoods">交易完成</a>
 </div>
 <table>
     <tr>
@@ -36,7 +37,7 @@
         <td th:text="${goods.getLocation()}"></td>
         <td th:text="${goods.getStar()}"></td>
         <td th:text="${goods.getTime()}"></td>
-        <td><a th:href="@{/showGoods(id=${goods.getId()})}">详情</a> </td>
+        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
         <td><a th:href="@{/myGoods/updateGoodsPage(id=${goods.getId()})}">修改</a> </td>
         <!--        todo 局部刷新-->
         <td><a th:href="@{/myGoods/onLineGoods(id=${goods.getId()})}">上架</a> </td>

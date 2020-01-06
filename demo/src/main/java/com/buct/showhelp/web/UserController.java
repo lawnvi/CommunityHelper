@@ -128,4 +128,5 @@ public class UserController {
         userService.changePassword(Utils.getUserSession(request).getId(), psw1);
         return "redirect:./myInformation";
     }
+
 }

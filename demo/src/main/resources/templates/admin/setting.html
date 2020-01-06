@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div>
+    <a href="/admin/logs">网站状态</a>
+    <a href="/admin/users">用户管理</a>
+    <a href="/admin/goods">物品管理</a>
+    <a href="/admin/orders">订单管理</a>
+    <a href="/admin/notice">公告管理</a>
+    <a href="/admin/setting">后台设置</a>
+</div>
+<a href="/user/">网站登录</a>
+<div >
+    <a href="/admin/updateAdmin">修改</a>
+    <a href="/admin/changePasswordPage">修改密码</a>
+</div>
+昵称：<h th:text="${user.getName()}"/>
+<p th:text="${user.getPicPath()}"/>
+邮箱：<p th:text="${user.getEmail()}"/>
+电话：<p th:text="${user.getTel()}"/>
+</body>
+</html>

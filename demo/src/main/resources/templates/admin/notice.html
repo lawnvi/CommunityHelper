@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div>
+    <div>
+        <a href="/admin/logs">网站状态</a>
+        <a href="/admin/users">用户管理</a>
+        <a href="/admin/goods">物品管理</a>
+        <a href="/admin/orders">订单管理</a>
+        <a href="/admin/notice">公告管理</a>
+        <a href="/admin/setting">后台设置</a>
+    </div>
+</div>
+<a href="/user/">网站登录</a>
+<table>
+    <th>
+    <td>id</td>
+    <td>status</td>
+    <td>startTime</td>
+    <td>endTime</td>
+    <td>content</td>
+    </th>
+    <tr th:each="obj, objStat:${noticeList}">
+        <td th:text="${obj.getId()}">id</td>
+        <td th:text="${obj.getStatus()}">date</td>
+        <td th:text="${obj.getStartTime()}">visit</td>
+        <td th:text="${obj.getEndTime()}">user</td>
+        <td th:text="${obj.getContent()}">goods</td>
+        <td th:href="">修改</td>
+        <td th:href="">删除</td>
+    </tr>
+</table>
+</body>
+</html>

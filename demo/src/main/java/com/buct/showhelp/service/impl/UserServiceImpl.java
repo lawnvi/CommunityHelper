@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Service
 //@RequestMapping("user")
 public class UserServiceImpl implements UserService {
@@ -39,5 +41,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users findUserById(int id) {
         return usermapper.findUserById(id);
+    }
+
+    @Override
+    public List<Users> findUserByName(String keyword) {
+        return usermapper.findUserByName(keyword);
+    }
+
+    @Override
+    public List<Users> findAllUser() {
+        return usermapper.findAllUser();
     }
 }

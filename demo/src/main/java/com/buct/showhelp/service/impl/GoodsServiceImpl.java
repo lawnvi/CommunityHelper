@@ -63,4 +63,9 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Goods> findWantByStatus(int buyerid, String status) {
         return goodsMapper.findGoodsByBuyerId(buyerid, status);
     }
+
+    @Override
+    public List<Goods> findAllGoods() {
+        return goodsMapper.findAllGoods();
+    }
 }

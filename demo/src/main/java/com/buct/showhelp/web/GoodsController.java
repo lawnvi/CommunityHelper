@@ -159,13 +159,13 @@ public class GoodsController {
         if(result == 0){
             return "修改失败";
         }
-        return "redirect:../showGoods?id="+goods.getId();
+        return "redirect:/index/showGoods?id="+goods.getId();
     }
 
     //更新状态 点赞、访问<-局部刷新 在售状态变化
 
     //展示一个物品
-    @RequestMapping("/showGoods")
+    @RequestMapping("index/showGoods")
     public String showOneGoods(Model model, @RequestParam("id") int id){
         Goods goods = goodsService.findGoodsById(id);
         model.addAttribute("oneGoods", goods);
@@ -187,6 +187,11 @@ public class GoodsController {
             return "没有了额";
         }
         Users user = Utils.getUserSession(request);
+        if(user.getId() == goods.getSellerid()){
+            //todo tips
+            return "不能买自己的额";
+        }
+
         goodsService.buyGoods(user.getId(), goodsid, Utils.getTime(), Global.GOODS_STATUS_LOCK);
         Orders order = new Orders();
         order.setBuyerId(user.getId());
@@ -225,7 +230,7 @@ public class GoodsController {
     //seller refuse
     @RequestMapping("/buyGoods/accept")
     public String gotDeal(@RequestParam("id") int orderId, @RequestParam("content") String content){
-        orderService.updateOrder(orderId, Global.ORDER_STATUS_SELLER_CANCEL, "交易成功/n"+content);
+        orderService.updateOrder(orderId, Global.ORDER_STATUS_SUCCESS, "交易成功/n"+content);
         Orders orders = orderService.findOrdersById(orderId);
         Goods goods = goodsService.findGoodsById(orders.getGoodsId());
         goods.setStatus(Global.GOODS_STATUS_SOLD);
@@ -239,7 +244,8 @@ public class GoodsController {
     public String showMyOrder(Model model, HttpServletRequest request){
         List<Goods> list = goodsService.findWantByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_SOLD);
         for (Goods goods: list) {
-            goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_WAITING).getId());
+            System.out.println(goods.getId()+" "+Global.ORDER_STATUS_SUCCESS);
+            goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_SUCCESS).getId());
         }
         model.addAttribute("goodsList", list);
         return "asBuyer/showMyOrder";
@@ -249,6 +255,7 @@ public class GoodsController {
     public String showMyRequest(Model model, HttpServletRequest request){
         List<Goods> list = goodsService.findWantByStatus(Utils.getUserSession(request).getId(), Global.GOODS_STATUS_LOCK);
         for (Goods goods: list) {
+            System.out.println(goods.getId()+" ");
             goods.setOrderIdBuffer(orderService.findOrdersByStatusAndGoods(goods.getId(), Global.ORDER_STATUS_WAITING).getId());
         }
         model.addAttribute("goodsList", list);

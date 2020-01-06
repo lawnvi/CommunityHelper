@@ -12,7 +12,7 @@
     <a href="/index">home</a>
     <a href="/myGoods">goods</a>
     <a href="/asBuyer/request">我买到的</a>
-    <a href="/chat">chat</a>
+    <a href="/tips/noPage">chat</a>
     <a href="/user/myInformation">我的信息</a>
 </div>
 <table>
@@ -32,7 +32,7 @@
         <td th:text="${goods.getLocation()}"></td>
         <td th:text="${goods.getStar()}"></td>
         <td th:text="${goods.getTime()}"></td>
-        <td><a th:href="@{/showGoods(id=${goods.getId()})}">详情</a> </td>
+        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
     </tr>
 
 </table>

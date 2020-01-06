@@ -3,6 +3,8 @@ package com.buct.showhelp.mapper;
 import com.buct.showhelp.pojo.Users;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     //登录注册
@@ -22,4 +24,11 @@ public interface UserMapper {
     //change password
     @Update("update users set password = #{psw} where id = #{id}")
     int changePassword(int id, String psw);
+
+    @Select("select * from users where name like #{keyword}")
+    List<Users> findUserByName(String keyword);
+
+    @Select("select * from users")
+    List<Users> findAllUser();
+
 }

@@ -2,29 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>请求交易</title>
+    <title>Admin</title>
 </head>
 <body>
-<div >
-    <a href="/index">home</a>
-    <a href="/myGoods">goods</a>
-    我买到的
-    <a href="/tips/noPage">chat</a>
-    <a href="/user/myInformation">我的信息</a>
-</div>
 <div>
-    <a href="/asBuyer/order">我的订单</a>
-    <a href="/asBuyer/request">我的请求</a>
+    <a href="/admin/logs">网站状态</a>
+    <a href="/admin/users">用户管理</a>
+    <a href="/admin/goods">物品管理</a>
+    <a href="/admin/orders">订单管理</a>
+    <a href="/admin/notice">公告管理</a>
+    <a href="/admin/setting">后台设置</a>
 </div>
+<a href="/user/">网站登录</a>
 <table>
     <tr>
         <td>name</td>
         <td>price</td>
         <td>detail</td>
         <td>location</td>
-        <td>buyer</td>
-        <td>seller</td>
-        <td>deal_time</td>
+        <td>like</td>
+        <td>time</td>
+        <td>url</td>
     </tr>
 
     <tr th:each="goods, goodsStat:${goodsList}">
@@ -32,10 +30,10 @@
         <td th:text="${goods.getPrice()}"></td>
         <td th:text="${goods.getDetail()}"></td>
         <td th:text="${goods.getLocation()}"></td>
-        <td th:text="${goods.getBuyerid()}"></td>
-        <td th:text="${goods.getSellerid()}"></td>
+        <td th:text="${goods.getStar()}"></td>
+        <td th:text="${goods.getTime()}"></td>
+        <td th:text="${goods.getPurchaseUrl()}"></td>
         <td><a th:href="@{/showGoods(id=${goods.getId()})}">详情</a> </td>
-        <td><a th:href="@{/buyGoods/buyerCancel(id=${goods.getOrderIdBuffer()}, content=${''})}">取消</a></td>
     </tr>
 
 </table>

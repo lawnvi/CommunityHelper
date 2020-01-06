@@ -15,6 +15,8 @@ public interface GoodsMapper {
     List<Goods> findOnSaleGoods();
 
     //获取所有商品
+    @Select("select * from goods")
+    List<Goods> findAllGoods();
 
     /**
      * asSeller
@@ -55,4 +57,12 @@ public interface GoodsMapper {
     //获取我的订单
     @Select("select * from goods where status = #{status} and buyerid = #{buyerid}")
     List<Goods> findGoodsByBuyerId(int buyerid, String status);
+
+    //模糊搜索
+    @Select("select * from goods where detail like _#{keyword}_ or title like _#{keyword}_")
+    List<Goods> findGoodsByKeyword(String keyword);
+
+    //按价格搜索
+    @Select("select * from goods where price >= #{priceLow} and price <= #{priceHigh}")
+    List<Goods> findGoodsByPrice(float priceLow, float priceHigh);
 }

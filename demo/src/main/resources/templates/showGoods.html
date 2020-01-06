@@ -6,10 +6,11 @@
 </head>
 <body>
 <div >
-    <a href="index">home</a>
-    <a href="myGoods">goods</a>
-    <a href="chat">chat</a>
-    <a href="myInformation">我的信息</a>
+    <a href="/index">home</a>
+    <a href="/myGoods">goods</a>
+    <a href="/asBuyer/request">我买到的</a>
+    <a href="/tips/noPage">chat</a>
+    <a href="/user/myInformation">我的信息</a>
 </div>
 <!--照片：<p th:text="${oneGoods.getPicturePath()}"></p>-->
 题目：<p th:text="${oneGoods.getTitle()}"></p>
@@ -21,10 +22,9 @@
 地点：<p th:text="${oneGoods.getLocation()}"></p>
 想要：<p th:text="${oneGoods.getStar()}"></p>
 访问：<p th:text="${oneGoods.getVisit()}"></p>
-<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">更新</a>
-<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">分享</a>
-<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">留言</a>
-<a th:href="@{/myGoods/updateGoodsPage(id=${oneGoods.getId()})}">喜欢</a>
+<a th:href="@{/tips/noPage(id=${oneGoods.getId()})}">分享</a>
+<a th:href="@{/tips/noPage(id=${oneGoods.getId()})}">留言</a>
+<a th:href="@{/tips/noPage(id=${oneGoods.getId()})}">喜欢</a>
 <a th:href="@{/buyGoods(goodsid=${oneGoods.getId()})}">购买</a>
 </body>
 </html>

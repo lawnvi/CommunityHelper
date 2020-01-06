@@ -1,6 +1,9 @@
 package com.buct.showhelp.service;
 
 import com.buct.showhelp.pojo.Users;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface UserService {
     Users userLogin(String userNumber, String password);
@@ -13,4 +16,8 @@ public interface UserService {
     int changePassword(int id, String psw);
 
     Users findUserById(int id);
+
+    List<Users> findUserByName(String keyword);
+
+    List<Users> findAllUser();
 }
