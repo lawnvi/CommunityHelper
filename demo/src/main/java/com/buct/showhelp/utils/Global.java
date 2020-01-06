@@ -12,4 +12,7 @@ public class Global {
     public static final String ORDER_STATUS_BUYER_CANCEL = "buyerNo";
     public static final String ORDER_STATUS_SELLER_CANCEL = "sellerNo";
     public static final String ORDER_STATUS_WAITING = "waiting";
+
+    //url
+    public static final String WEBSITE_INDEX = "/index";
 }

@@ -34,7 +34,7 @@
         <td th:text="${goods.getLocation()}"></td>
         <td th:text="${goods.getBuyerid()}"></td>
         <td th:text="${goods.getSellerid()}"></td>
-        <td><a th:href="@{/showGoods(id=${goods.getId()})}">详情</a> </td>
+        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
         <td><a th:href="@{/buyGoods/buyerCancel(id=${goods.getOrderIdBuffer()}, content=${''})}">取消</a></td>
     </tr>
 

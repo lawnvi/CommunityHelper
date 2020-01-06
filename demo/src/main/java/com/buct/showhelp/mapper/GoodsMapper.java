@@ -36,7 +36,7 @@ public interface GoodsMapper {
     int updateGoods(Goods goods);
 
     // 更新喜欢、访问、状态
-    @Update("update goods set star = #{star}, visit = #{visit}, status = #{status} where id = #{id}")
+    @Update("update goods set buyerid = #{buyerid}, star = #{star}, visit = #{visit}, status = #{status} where id = #{id}")
     int updateGoodsStatus(Goods goods);
 
     //delete a goods

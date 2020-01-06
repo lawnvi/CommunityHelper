@@ -21,6 +21,9 @@ public interface UserMapper {
     @Select("select * from users where id = #{id}")
     Users findUserById(int id);
 
+    @Select("select * from users where email = #{email}")
+    Users findUserByEmail(String email);
+
     //change password
     @Update("update users set password = #{psw} where id = #{id}")
     int changePassword(int id, String psw);

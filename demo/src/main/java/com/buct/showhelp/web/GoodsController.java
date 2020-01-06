@@ -7,6 +7,8 @@ import com.buct.showhelp.pojo.Orders;
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.GoodsService;
 import com.buct.showhelp.service.OrderService;
+import com.buct.showhelp.service.UserService;
+import com.buct.showhelp.utils.Email;
 import com.buct.showhelp.utils.Global;
 import com.buct.showhelp.utils.Utils;
 import org.apache.catalina.Session;
@@ -29,6 +31,10 @@ public class GoodsController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
+
     static Users users;
 
 //    todo 分页 判断自己的物品
@@ -200,6 +206,9 @@ public class GoodsController {
         order.setSellerId(goods.getSellerid());
         order.setContent(user.getName()+"请求交易,等待卖家回复进行线下交易");
         orderService.addOrder(order);
+        Users seller = userService.findUserById(order.getSellerId());
+        Users buyer = userService.findUserById(order.getBuyerId());
+        Email.sendMail(seller.getEmail(), Email.askForDeal(seller, buyer, goods));
         //todo email and dialog
         return "redirect:/asBuyer/request";
     }
@@ -211,6 +220,7 @@ public class GoodsController {
         Orders orders = orderService.findOrdersById(orderId);
         Goods goods = goodsService.findGoodsById(orders.getGoodsId());
         goods.setStatus(Global.GOODS_STATUS_ON_SALE);
+        goods.setBuyerid(0);
         goodsService.updateGoodsStatus(goods);
         return "redirect:/asBuyer/request";
     }
@@ -222,6 +232,7 @@ public class GoodsController {
         Orders orders = orderService.findOrdersById(orderId);
         Goods goods = goodsService.findGoodsById(orders.getGoodsId());
         goods.setStatus(Global.GOODS_STATUS_ON_SALE);
+        goods.setBuyerid(0);
         goodsService.updateGoodsStatus(goods);
         return "redirect:/myGoods/dealingGoods";
     }
@@ -235,6 +246,9 @@ public class GoodsController {
         Goods goods = goodsService.findGoodsById(orders.getGoodsId());
         goods.setStatus(Global.GOODS_STATUS_SOLD);
         goodsService.updateGoodsStatus(goods);
+        Users seller = userService.findUserById(orders.getSellerId());
+        Users buyer = userService.findUserById(orders.getBuyerId());
+        Email.sendMail(seller.getEmail(), Email.acceptDeal(seller, buyer, goods));
         return "redirect:/myGoods/dealingGoods";
     }
     /**

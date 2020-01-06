@@ -19,5 +19,7 @@ public interface UserService {
 
     List<Users> findUserByName(String keyword);
 
+    Users findUserByEmail(String email);
+
     List<Users> findAllUser();
 }

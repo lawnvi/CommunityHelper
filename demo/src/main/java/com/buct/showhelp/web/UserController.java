@@ -2,6 +2,7 @@ package com.buct.showhelp.web;
 
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.UserService;
+import com.buct.showhelp.utils.Email;
 import com.buct.showhelp.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -127,6 +130,47 @@ public class UserController {
         }
         userService.changePassword(Utils.getUserSession(request).getId(), psw1);
         return "redirect:./myInformation";
+    }
+
+    //找回密码
+    @RequestMapping("/forgetPasswordPage")
+    public String resetPasswordPage(){
+        return "information/sendCode";
+    }
+    @RequestMapping("/sendCode")
+    public String sendCode(@RequestParam("email") String email, HttpServletRequest request){
+        Users users = userService.findUserByEmail(email);
+        if(users == null){
+            return "/error/awsl";
+        }
+        String code = Utils.getCode();
+        Email.sendMail(email, Email.forgetPsw(users, code));
+        request.getSession().setAttribute(email, code);
+        return "/information/resetPassword";
+    }
+    @RequestMapping("/resetPassword")
+    public String resetPassword(@RequestParam("email") String email,
+                                @RequestParam("code") String code,
+                                @RequestParam("newPassword1") String psw1,
+                                @RequestParam("newPassword2") String psw2,
+                                HttpServletRequest request){
+//        userService.findUserById(Utils.getUserSession(request).getId())
+        if(!psw1.equals(psw2)){
+            //todo 弹窗
+            return "确认密码不一致";
+        }
+
+        String yourCode = Utils.getSessionStr(request, email);
+
+        if(yourCode == null){
+            return "邮箱好像不对";
+        }
+        if(!code.equals(code)){
+            return "验证码错误";
+        }
+        Users users = userService.findUserByEmail(email);
+        userService.changePassword(users.getId(), psw1);
+        return "redirect:/user/";
     }
 
 }
