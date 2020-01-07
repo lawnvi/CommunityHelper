@@ -15,14 +15,14 @@
 </div>
 <a href="/user/">网站登录</a>
 <table>
-    <th>
+    <tr>
     <td>id</td>
     <td>goodsid</td>
     <td>sellerid</td>
     <td>buyerid</td>
     <td>time</td>
     <td>status</td>
-    </th>
+    </tr>
     <tr th:each="obj, objStat:${ordersList}">
         <td th:text="${obj.getId()}">id</td>
         <td th:text="${obj.getGoodsId()}">date</td>

@@ -17,6 +17,7 @@
 </div>
 <table>
     <tr>
+        <td>pic</td>
         <td>name</td>
         <td>price</td>
         <td>detail</td>
@@ -24,8 +25,8 @@
         <td>star</td>
         <td>time</td>
     </tr>
-
     <tr th:each="goods, goodsStat:${goodslist}">
+        <td><img th:src="${goods.getPicPath()}" th:width="40" th:height="40"/> </td>
         <td th:text="${goods.getTitle()}"></td>
         <td th:text="${goods.getPrice()}"></td>
         <td th:text="${goods.getDetail()}"></td>

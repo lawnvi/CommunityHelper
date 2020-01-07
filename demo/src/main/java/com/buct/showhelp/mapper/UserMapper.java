@@ -12,10 +12,10 @@ public interface UserMapper {
     Users userLogin(@Param("email") String email, @Param("password") String password);
 
 //    name number password tel address email school ip picturePath
-    @Insert("insert into users (name, password, email, picture_path) values(#{name}, #{password}, #{email}, '')")
-    int userRegister(@Param("name") String name, @Param("password") String password, @Param("email") String email);
+    @Insert("insert into users (name, password, email, picturePath) values(#{name}, #{password}, #{email}, #{picturePath})")
+    int userRegister(Users users);
 
-    @Update("update users set name = #{name}, tel = #{tel}, address = #{address}, school = #{school}, picture_path = #{picturePath} where id = #{id}")
+    @Update("update users set name = #{name}, tel = #{tel}, address = #{address}, school = #{school}, picturePath = #{picturePath} where id = #{id}")
     int updateUser(Users users);
 
     @Select("select * from users where id = #{id}")

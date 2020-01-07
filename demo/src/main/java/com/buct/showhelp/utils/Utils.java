@@ -2,9 +2,11 @@ package com.buct.showhelp.utils;
 
 import com.buct.showhelp.pojo.Admin;
 import com.buct.showhelp.pojo.Users;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,12 @@ public class Utils {
         return df.format(day);
     }
 
+    public static String getDate(){
+        Date day = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        return df.format(day);
+    }
+
     public static String getCode() {
         int n = 6;
         String string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";//保存数字0-9 和 大小写字母
@@ -44,5 +52,29 @@ public class Utils {
             sb.append(ch);// append(char c) :将 char 参数的字符串表示形式追加到此序列  ==》即将每次获取的ch值作拼接
         }
         return sb.toString();//toString() : 返回此序列中数据的字符串表示形式   ==》即返回一个String类型的数据
+    }
+
+    public static String saveFile(MultipartFile file, String path){
+        if(!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();  // 文件名
+            //fileName = UUID.randomUUID() + suffixName; // 新文件名
+            String newName= Utils.getCode()+"-" +Utils.getCode() + fileName.substring(fileName.lastIndexOf(".")); // 新文件名
+
+            File file2 = new File(Global.ABSOLUTEPATH+path);
+            if(!file2.isDirectory()) {
+                //递归生成文件夹
+                file2.mkdirs();
+            }
+            try {
+                //构建真实的文件路径
+                File newFile = new File(file2.getAbsolutePath() + File.separator + newName);
+                //转存文件到指定路径，如果文件名重复的话，将会覆盖掉之前的文件,这里是把文件上传到 “绝对路径”
+                file.transferTo(newFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return path+File.separator+newName;
+        }
+        return "";
     }
 }

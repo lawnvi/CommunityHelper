@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     Users userLogin(String userNumber, String password);
 
-    int userRegister(String username, String password, String email);
+    int userRegister(Users users);
 
     //更新个人信息
     int updateUser(Users users);

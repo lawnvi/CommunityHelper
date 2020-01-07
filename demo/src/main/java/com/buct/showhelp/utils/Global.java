@@ -15,4 +15,12 @@ public class Global {
 
     //url
     public static final String WEBSITE_INDEX = "/index";
+
+    //default
+    public static final String DEFAULT_PICTURE = "/image/default_user.jpg";
+    public static final String DEFAULT_GOODS_PICTURE = "/image/default_goods.png";
+    public static final String DEFAULT_USER_PATH = "/upload/picture/user/";
+    public static final String DEFAULT_GOODS_PATH = "/upload/picture/goods/";
+    public static final String ABSOLUTEPATH = "D://schoolHelper/";
+//    String realPath = new String("D://schoolHelper/upload/picture/user/");
 }

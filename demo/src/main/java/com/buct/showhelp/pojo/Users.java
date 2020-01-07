@@ -1,5 +1,7 @@
 package com.buct.showhelp.pojo;
 
+import com.buct.showhelp.utils.Global;
+
 /**
  * 用户对象
  * id name number password tel address email school ip

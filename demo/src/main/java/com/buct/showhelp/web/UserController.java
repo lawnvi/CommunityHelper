@@ -1,8 +1,10 @@
 package com.buct.showhelp.web;
 
+import com.buct.showhelp.pojo.Goods;
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.UserService;
 import com.buct.showhelp.utils.Email;
+import com.buct.showhelp.utils.Global;
 import com.buct.showhelp.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("user")
@@ -65,7 +72,12 @@ public class UserController {
         if(!psw.equals(psw2)){
             return "密码不一致，请确认密码再注册！";
         }
-        int result = userService.userRegister(name, psw, email);
+        Users users = new Users();
+        users.setName(name);
+        users.setEmail(email);
+        users.setPassword(psw);
+        users.setPicturePath(Global.DEFAULT_PICTURE);
+        int result = userService.userRegister(users);
         if(result == 0){
             return "注册失败！";
         } else {
@@ -91,10 +103,15 @@ public class UserController {
         return "information/updateUser";
     }
     @RequestMapping("/updateUser")
-    public String updateUser(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("address") String address,
-                             @RequestParam("tel") String tel, @RequestParam("school") String school, @RequestParam("picturePath") String picturePath){
-        Users users = new Users();
-        users.setId(id);
+    public String updateUser(HttpServletRequest request,
+                             @RequestParam("id") int id, @RequestParam("name") String name,
+                             @RequestParam("address") String address, @RequestParam("tel") String tel,
+                             @RequestParam("school") String school, @RequestParam("picturePath") String picturePath,
+                             @RequestParam(value = "file") MultipartFile file){
+        Users users = userService.findUserById(id);
+        if(!file.isEmpty()){
+            users.setPicturePath(Utils.saveFile(file, Global.DEFAULT_USER_PATH));
+        }
         users.setAddress(address);
         users.setName(name);
         users.setTel(tel);

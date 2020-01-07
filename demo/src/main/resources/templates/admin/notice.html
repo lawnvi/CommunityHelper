@@ -17,13 +17,13 @@
 </div>
 <a href="/user/">网站登录</a>
 <table>
-    <th>
+    <tr>
     <td>id</td>
     <td>status</td>
     <td>startTime</td>
     <td>endTime</td>
     <td>content</td>
-    </th>
+    </tr>
     <tr th:each="obj, objStat:${noticeList}">
         <td th:text="${obj.getId()}">id</td>
         <td th:text="${obj.getStatus()}">date</td>

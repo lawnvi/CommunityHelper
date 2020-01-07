@@ -15,7 +15,7 @@
 </div>
 <a href="/user/">网站状态</a>
 <table>
-    <th>
+    <tr>
         <td>id</td>
         <td>date</td>
         <td>visit</td>
@@ -23,7 +23,7 @@
         <td>goods</td>
         <td>successDeal</td>
         <td>failedDeal</td>
-    </th>
+    </tr>
     <tr th:each="log, logStat:${logsList}">
         <td th:text="${log.getId()}">id</td>
         <td th:text="${log.getDate()}">date</td>

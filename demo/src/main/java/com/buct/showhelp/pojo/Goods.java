@@ -1,5 +1,7 @@
 package com.buct.showhelp.pojo;
 
+import com.buct.showhelp.utils.Global;
+
 public class Goods {
     private int id;
     private String title;
@@ -15,6 +17,16 @@ public class Goods {
     private int sellerid;
     private int buyerid;
     private int orderIdBuffer;
+    private String picPath;
+    private String picturePath;//图片
+
+    public String getPicPath() {
+        return picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
+    }
 
     public int getOrderIdBuffer() {
         return orderIdBuffer;
@@ -63,8 +75,6 @@ public class Goods {
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
-
-    private String picturePath;//图片
 
     public String getTime() {
         return time;

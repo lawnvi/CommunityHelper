@@ -3,10 +3,12 @@ package com.buct.showhelp.web;
 import com.buct.showhelp.mapper.GoodsMapper;
 import com.buct.showhelp.mapper.OrdersMapper;
 import com.buct.showhelp.pojo.Goods;
+import com.buct.showhelp.pojo.GoodsPicPath;
 import com.buct.showhelp.pojo.Orders;
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.GoodsService;
 import com.buct.showhelp.service.OrderService;
+import com.buct.showhelp.service.PictureService;
 import com.buct.showhelp.service.UserService;
 import com.buct.showhelp.utils.Email;
 import com.buct.showhelp.utils.Global;
@@ -19,10 +21,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class GoodsController {
@@ -122,9 +128,13 @@ public class GoodsController {
 //    title detail price purchaseUrl location number
     @RequestMapping("/myGoods/addGoods")
     public String addGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
-                        @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
-                        @RequestParam("location") String location, @RequestParam("number") int number){
+                           @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
+                           @RequestParam("location") String location, @RequestParam("number") int number,
+                           @RequestParam(value = "file") MultipartFile file){
         Goods goods = new Goods();
+        if(!file.isEmpty()){
+            goods.setPicPath(Utils.saveFile(file, Global.DEFAULT_GOODS_PATH+Utils.getDate()));
+        }
         goods.setTitle(title);
         goods.setDetail(detail);
         goods.setLocation(location);
@@ -148,11 +158,15 @@ public class GoodsController {
 
     //更新某物品
     @RequestMapping("/myGoods/updateGoods")
-    public String updateGoods(@RequestParam("title") String title, @RequestParam("detail") String detail,
+    public String updateGoods(HttpServletRequest request,
+                              @RequestParam("title") String title, @RequestParam("detail") String detail,
                               @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
                               @RequestParam("location") String location, @RequestParam("number") int number,
-                              @RequestParam("id") int id){
+                              @RequestParam("id") int id, @RequestParam(value = "file") MultipartFile file){
         Goods goods = new Goods();
+        if(!file.isEmpty()){
+            goods.setPicPath(Utils.saveFile(file, Global.DEFAULT_GOODS_PATH+Utils.getDate()));
+        }
         goods.setId(id);
         goods.setTitle(title);
         goods.setDetail(detail);
@@ -160,7 +174,7 @@ public class GoodsController {
         goods.setNumber(number);
         goods.setPurchaseUrl(purchaseUrl);
         goods.setPrice(price);
-        goods.setSellerid(users.getId());
+        goods.setSellerid(Utils.getUserSession(request).getId());
         int result = goodsService.updateGoods(goods);
         if(result == 0){
             return "修改失败";
