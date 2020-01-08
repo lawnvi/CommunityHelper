@@ -7,15 +7,15 @@
 <body>
 <!--todo user session login-->
 <div >
-    <a href="/index">home</a>
-    <a href="/myGoods">goods</a>
-    <a href="../asBuyer">我买到的</a>
-    <a href="/tips/noPage">chat</a>
-    <a href="/user/myInformation">我的信息</a>
+    <a href="/schoolHelper/index">home</a>
+    <a href="/schoolHelper/myGoods">goods</a>
+    <a href="./">我买到的</a>
+    <a href="/schoolHelper/tips/noPage">chat</a>
+    <a href="/schoolHelper/user/myInformation">我的信息</a>
 </div>
 <div>
-    <a href="/asBuyer/order">我的订单</a>
-    <a href="/asBuyer/request">我的请求</a>
+    <a href="/schoolHelper/asBuyer/order">我的订单</a>
+    <a href="/schoolHelper/asBuyer/request">我的请求</a>
 </div>
 <table>
     <tr>
@@ -35,7 +35,7 @@
         <td th:text="${goods.getLocation()}"></td>
         <td th:text="${goods.getBuyerid()}"></td>
         <td th:text="${goods.getSellerid()}"></td>
-        <td><a th:href="@{index/showGoods(id=${goods.getId()})}">详情</a> </td>
+        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
     </tr>
 
 </table>

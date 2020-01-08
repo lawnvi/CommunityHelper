@@ -41,6 +41,12 @@ public class Utils {
         return df.format(day);
     }
 
+    public static String getTimeName(){
+        Date day = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("HH-mm-ss");
+        return df.format(day);
+    }
+
     public static String getCode() {
         int n = 6;
         String string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";//保存数字0-9 和 大小写字母
@@ -73,7 +79,7 @@ public class Utils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return path+File.separator+newName;
+            return "/"+Global.PACKAGE_NAME+path+File.separator+newName;
         }
         return "";
     }

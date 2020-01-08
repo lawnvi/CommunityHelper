@@ -5,9 +5,9 @@
     <title>修改个人信息</title>
 </head>
 <body>
-<form action="/user/updateUser" method="post">
+<form action="/schoolHelper/user/updateUser" method="post" enctype="multipart/form-data">
     昵称：<input th:value="${user.getName()}" name="name"/>
-    头像：<input th:value="${user.getPicturePath()}" name="picturePath"/>
+    图片：<input type="file" name="file"/>
     电话：<input th:value="${user.getTel()}" name="tel"/>
     学校：<input th:value="${user.getSchool()}" name="school"/>
     地址：<input th:value="${user.getAddress()}" name="address"/>

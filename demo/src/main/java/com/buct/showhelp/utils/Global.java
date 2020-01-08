@@ -14,13 +14,19 @@ public class Global {
     public static final String ORDER_STATUS_WAITING = "waiting";
 
     //url
-    public static final String WEBSITE_INDEX = "/index";
+    public static final String WEBSITE_INDEX = "106.54.100.69:8080/schoolHelper/index";
 
     //default
-    public static final String DEFAULT_PICTURE = "/image/default_user.jpg";
-    public static final String DEFAULT_GOODS_PICTURE = "/image/default_goods.png";
-    public static final String DEFAULT_USER_PATH = "/upload/picture/user/";
+    public static final String DEFAULT_PICTURE = "/schoolHelper/image/default_user.jpg";
+    public static final String DEFAULT_GOODS_PICTURE = "/schoolHelper/image/default_goods.png";
+    public static final String DEFAULT_USER_PATH = "/upload/picture/user";
     public static final String DEFAULT_GOODS_PATH = "/upload/picture/goods/";
     public static final String ABSOLUTEPATH = "D://schoolHelper/";
+    //public static final String ABSOLUTEPATH = "file:/root/usr/local/";
 //    String realPath = new String("D://schoolHelper/upload/picture/user/");
+
+    //packageName
+    public static final String PACKAGE_NAME = "schoolHelper";
+    public static final String SERVER_IP = "106.54.100.69";
+    public static final String SERVER_PORT = "8080";
 }

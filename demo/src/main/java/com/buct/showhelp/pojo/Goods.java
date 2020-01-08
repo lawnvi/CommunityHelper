@@ -17,7 +17,7 @@ public class Goods {
     private int sellerid;
     private int buyerid;
     private int orderIdBuffer;
-    private String picPath;
+    private String picPath = "/schoolHelper/image/default_goods.png";
     private String picturePath;//图片
 
     public String getPicPath() {

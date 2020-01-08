@@ -163,11 +163,10 @@ public class GoodsController {
                               @RequestParam("price") float price, @RequestParam("purchaseUrl") String purchaseUrl,
                               @RequestParam("location") String location, @RequestParam("number") int number,
                               @RequestParam("id") int id, @RequestParam(value = "file") MultipartFile file){
-        Goods goods = new Goods();
+        Goods goods = goodsService.findGoodsById(id);
         if(!file.isEmpty()){
             goods.setPicPath(Utils.saveFile(file, Global.DEFAULT_GOODS_PATH+Utils.getDate()));
         }
-        goods.setId(id);
         goods.setTitle(title);
         goods.setDetail(detail);
         goods.setLocation(location);

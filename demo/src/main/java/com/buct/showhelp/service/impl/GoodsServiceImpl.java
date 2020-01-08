@@ -28,7 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public int addGoods(Goods goods) {
-        int result = goodsMapper.addGoods(goods.getTitle(), goods.getDetail(), goods.getPrice(), goods.getPurchaseUrl(), goods.getLocation(), goods.getNumber(), goods.getSellerid());
+        int result = goodsMapper.addGoods(goods);
         return result;
     }
 

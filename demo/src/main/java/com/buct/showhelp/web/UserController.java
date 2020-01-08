@@ -23,22 +23,21 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
-    public String Root(Model m) {
-//        m.addAttribute("name", "thymeleaf");
-        return "login";
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "/login";
     }
 
     /**
      * 获取name, psw，login
      */
-    @RequestMapping("/login")
+    @RequestMapping("/loginMethod")
     public String userLogin(@RequestParam("email") String email, @RequestParam("password") String psw, HttpServletRequest request){
         Users users = userService.userLogin(email, psw);
         System.out.println(email +" "+psw);
@@ -48,14 +47,14 @@ public class UserController {
 //            request.getSession().setMaxInactiveInterval(0);
             return "redirect:../index";
         }
-        return "loginError";
+        return "/schoolHelper/loginError";
     }
 
     //logout
     @RequestMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "redirect:/user/";
+        return "redirect:/user/login";
     }
 
     @RequestMapping("/registerpage")
@@ -67,7 +66,7 @@ public class UserController {
      * 注册新用户
      */
     @ResponseBody
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public String userRegister(@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("password") String psw, @RequestParam("password2") String psw2){
         if(!psw.equals(psw2)){
             return "密码不一致，请确认密码再注册！";
@@ -106,8 +105,7 @@ public class UserController {
     public String updateUser(HttpServletRequest request,
                              @RequestParam("id") int id, @RequestParam("name") String name,
                              @RequestParam("address") String address, @RequestParam("tel") String tel,
-                             @RequestParam("school") String school, @RequestParam("picturePath") String picturePath,
-                             @RequestParam(value = "file") MultipartFile file){
+                             @RequestParam("school") String school, @RequestParam(value = "file") MultipartFile file){
         Users users = userService.findUserById(id);
         if(!file.isEmpty()){
             users.setPicturePath(Utils.saveFile(file, Global.DEFAULT_USER_PATH));
@@ -116,7 +114,6 @@ public class UserController {
         users.setName(name);
         users.setTel(tel);
         users.setSchool(school);
-        users.setPicturePath(picturePath);
         users.setEmail(Utils.getUserSession(request).getEmail());
         int result = userService.updateUser(users);
         if(result == 0)

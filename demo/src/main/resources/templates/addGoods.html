@@ -6,13 +6,14 @@
 </head>
 <body>
 <!--title detail price purchaseUrl location number-->
-<form action="/myGoods/addGoods" method="post">
+<form action="/schoolHelper/myGoods/addGoods" method="post" enctype="multipart/form-data">
     标题:<input name="title" type="text"/><br/>
     描述:<input name="detail" type="text"/><br/>
     价格:<input name="price" type="text"/><br/>
     链接:<input name="purchaseUrl" type="text"/><br/>
     地点:<input name="location" type="text"/><br/>
     数量:<input name="number" type="text"/><br/>
+    图片:<input type="file" name="file"/>
     <input type="submit" value="上架"/>
 </form>
 </body>

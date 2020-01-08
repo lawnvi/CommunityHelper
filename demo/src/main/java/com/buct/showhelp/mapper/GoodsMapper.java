@@ -27,8 +27,8 @@ public interface GoodsMapper {
 
 //  title detail price purchaseUrl location number
     //上架
-    @Insert("insert into goods (title,detail,price,purchaseUrl,location,number,sellerid,picPath) values (#{title}, #{detail}, #{price}, #{url}, #{location}, #{number}, #{sellerid}, #{picPath})")
-    int addGoods(String title, String detail, double price, String url, String location, int number, int sellerid);
+    @Insert("insert into goods (title,detail,price,purchaseUrl,location,number,sellerid,picPath) values (#{title}, #{detail}, #{price}, #{purchaseUrl}, #{location}, #{number}, #{sellerid}, #{picPath})")
+    int addGoods(Goods goods);
 //    int addGoods(Users users);
 
     //更新物品

@@ -1,6 +1,7 @@
 package com.buct.showhelp.config.intercepors;
 
 import com.buct.showhelp.pojo.Users;
+import com.buct.showhelp.utils.Global;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null && !request.getRequestURL().toString().contains("admin") && !request.getRequestURL().toString().contains("index")){
             //这个方法返回false表示忽略当前请求，如果一个用户调用了需要登陆才能使用的接口，如果他没有登陆这里会直接忽略掉
             //当然你可以利用response给用户返回一些提示信息，告诉他没登陆
-            response.sendRedirect("/user/?redirectURL="+request.getRequestURL());
+            response.sendRedirect("/"+ Global.PACKAGE_NAME+"/user/login?redirectURL="+request.getRequestURL());
             return false;
         }else {
             return true;    //如果session里有user，表示该用户已经登陆，放行，用户即可继续调用自己需要的接口

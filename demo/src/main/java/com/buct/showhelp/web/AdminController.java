@@ -5,6 +5,7 @@ import com.buct.showhelp.service.AdminService;
 import com.buct.showhelp.service.GoodsService;
 import com.buct.showhelp.service.OrderService;
 import com.buct.showhelp.service.UserService;
+import com.buct.showhelp.utils.Global;
 import com.buct.showhelp.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class AdminController {
     public String registerPage(){
         return "/admin/register";
     }
-    @RequestMapping("registerMethod")
+    @RequestMapping("/registerMethod")
     public String userRegister(@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("password") String psw, @RequestParam("password2") String psw2){
         if(!psw.equals(psw2)){
             return "密码不一致，请确认密码再注册！";
@@ -52,10 +53,6 @@ public class AdminController {
         }
     }
 
-    /**
-     * login
-     * @return
-     */
     @RequestMapping("/login")
     public String loginPage(){
         return "/admin/login";
