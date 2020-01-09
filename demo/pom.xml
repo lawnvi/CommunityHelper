@@ -14,6 +14,8 @@
     <name>showhelp</name>
     <description>Demo project for Spring Boot</description>
 
+    <packaging>war</packaging>
+
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -22,6 +24,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
 
         <dependency>
@@ -44,7 +52,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <dependency>
@@ -69,7 +77,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -80,7 +87,6 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-
         </dependency>
 
         <dependency>
@@ -102,15 +108,6 @@
             <version>5.1.21</version>
         </dependency>
 
-        <!-- Start: commons相关依赖包 上传文件 -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
         <!-- 邮件 -->
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -128,6 +125,7 @@
     </dependencies>
 
     <build>
+        <finalName>schoolHelper</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

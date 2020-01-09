@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="${user.getName()}"></p>
+<a href="/user/logout">注销</a>
+<div >
+    <a href="/schoolHelper/index">home</a>
+    <a href="/schoolHelper/myGoods">goods</a>
+    <a href="/schoolHelper/asBuyer/request">我买到的</a>
+    <a href="/schoolHelper/tips/noPage">chat</a>
+    <a href="/schoolHelper/user/myInformation">我的信息</a>
+</div>
+<div >
+    <a href="/schoolHelper/user/updateUserPage">修改</a>
+    <a href="/schoolHelper/user/changePasswordPage">修改密码</a>
+</div>
+昵称：<h th:text="${user.getName()}"/>
+<p th:text="${user.getPicturePath()}"/>
+邮箱：<p th:text="${user.getEmail()}"/>
+电话：<p th:text="${user.getTel()}"/>
+学校：<p th:text="${user.getSchool()}"/>
+地址：<p th:text="${user.getAddress()}"/>
+</body>
+</html>

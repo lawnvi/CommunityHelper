@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>SchoolShowHelp</title>
+</head>
+<body>
+<!--todo user session login-->
+<a href="/schoolHelper/user/login" ><p th:text="${user}"></p></a>
+<a href="/schoolHelper/user/logout">注销</a>
+<div >
+    <a href="/schoolHelper/index">home</a>
+    <a href="/schoolHelper/myGoods">goods</a>
+    <a href="/schoolHelper/asBuyer/request">我买到的</a>
+    <a href="/schoolHelper/tips/noPage">chat</a>
+    <a href="/schoolHelper/user/myInformation">我的信息</a>
+</div>
+<table>
+    <tr>
+        <td>pic</td>
+        <td>name</td>
+        <td>price</td>
+        <td>detail</td>
+        <td>location</td>
+        <td>star</td>
+        <td>time</td>
+    </tr>
+    <tr th:each="goods, goodsStat:${goodslist}">
+        <td><img th:src="${goods.getPicPath()}" th:width="40" th:height="40"/> </td>
+        <td th:text="${goods.getTitle()}"></td>
+        <td th:text="${goods.getPrice()}"></td>
+        <td th:text="${goods.getDetail()}"></td>
+        <td th:text="${goods.getLocation()}"></td>
+        <td th:text="${goods.getStar()}"></td>
+        <td th:text="${goods.getTime()}"></td>
+        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

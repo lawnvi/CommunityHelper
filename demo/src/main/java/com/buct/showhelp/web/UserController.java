@@ -47,7 +47,7 @@ public class UserController {
 //            request.getSession().setMaxInactiveInterval(0);
             return "redirect:../index";
         }
-        return "/schoolHelper/loginError";
+        return "/schoolHelper/error/awsl";
     }
 
     //logout
@@ -76,6 +76,10 @@ public class UserController {
         users.setEmail(email);
         users.setPassword(psw);
         users.setPicturePath(Global.DEFAULT_PICTURE);
+        Users users1 = userService.findUserByEmail(users.getEmail());
+        if(users1 != null){
+            return "注册失败";
+        }
         int result = userService.userRegister(users);
         if(result == 0){
             return "注册失败！";

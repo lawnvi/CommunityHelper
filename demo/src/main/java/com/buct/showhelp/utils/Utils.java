@@ -76,10 +76,10 @@ public class Utils {
                 File newFile = new File(file2.getAbsolutePath() + File.separator + newName);
                 //转存文件到指定路径，如果文件名重复的话，将会覆盖掉之前的文件,这里是把文件上传到 “绝对路径”
                 file.transferTo(newFile);
+                return "/"+Global.PACKAGE_NAME+path+File.separator+newName;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return "/"+Global.PACKAGE_NAME+path+File.separator+newName;
         }
         return "";
     }

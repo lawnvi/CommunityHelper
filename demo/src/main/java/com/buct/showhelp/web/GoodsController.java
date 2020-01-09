@@ -1,22 +1,15 @@
 package com.buct.showhelp.web;
 
-import com.buct.showhelp.mapper.GoodsMapper;
-import com.buct.showhelp.mapper.OrdersMapper;
 import com.buct.showhelp.pojo.Goods;
-import com.buct.showhelp.pojo.GoodsPicPath;
 import com.buct.showhelp.pojo.Orders;
 import com.buct.showhelp.pojo.Users;
 import com.buct.showhelp.service.GoodsService;
 import com.buct.showhelp.service.OrderService;
-import com.buct.showhelp.service.PictureService;
 import com.buct.showhelp.service.UserService;
 import com.buct.showhelp.utils.Email;
 import com.buct.showhelp.utils.Global;
 import com.buct.showhelp.utils.Utils;
-import org.apache.catalina.Session;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class GoodsController {

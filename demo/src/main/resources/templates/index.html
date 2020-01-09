@@ -1,42 +1,695 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-    <title>SchoolShowHelp</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS
+	============================================ -->
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,700,800,900%7CPoppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <!-- Font-awesome CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
+    <!-- Slick slider css -->
+    <link rel="stylesheet" href="assets/css/plugins/slick.min.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="assets/css/plugins/animate.css">
+    <!-- Nice Select css -->
+    <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
+    <!-- jquery UI css -->
+    <link rel="stylesheet" href="assets/css/plugins/jqueryui.min.css">
+    <!-- main style css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
+
 <body>
-<!--todo user session login-->
-<a href="/schoolHelper/user/login" ><p th:text="${user}"></p></a>
-<a href="/schoolHelper/user/logout">注销</a>
-<div >
-    <a href="/schoolHelper/index">home</a>
-    <a href="/schoolHelper/myGoods">goods</a>
-    <a href="/schoolHelper/asBuyer/request">我买到的</a>
-    <a href="/schoolHelper/tips/noPage">chat</a>
-    <a href="/schoolHelper/user/myInformation">我的信息</a>
-</div>
-<table>
-    <tr>
-        <td>pic</td>
-        <td>name</td>
-        <td>price</td>
-        <td>detail</td>
-        <td>location</td>
-        <td>star</td>
-        <td>time</td>
-    </tr>
-    <tr th:each="goods, goodsStat:${goodslist}">
-        <td><img th:src="${goods.getPicPath()}" th:width="40" th:height="40"/> </td>
-        <td th:text="${goods.getTitle()}"></td>
-        <td th:text="${goods.getPrice()}"></td>
-        <td th:text="${goods.getDetail()}"></td>
-        <td th:text="${goods.getLocation()}"></td>
-        <td th:text="${goods.getStar()}"></td>
-        <td th:text="${goods.getTime()}"></td>
-        <td><a th:href="@{/index/showGoods(id=${goods.getId()})}">详情</a> </td>
-    </tr>
+<!-- Start Header Area -->
+<header class="header-area header-style__2 header-transparent">
+    <!-- main header start -->
+    <div class="main-header d-none d-lg-block">
+        <!-- header top start -->
+        <div class="header-top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3">
+                        <div class="header-social-link">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 d-flex justify-content-end">
+                        <div class="top-left-navigation pl-0">
+                            <ul class="nav align-items-center">
+                                <li class="language">
+                                    <img src="assets/img/icon/cn.png" alt="flag"> 简体中文
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="dropdown-list">
+                                        <li><a href="#"><img src="assets/img/icon/CN.png" alt="flag"> 中文</a></li>
+                                        <li><a href="#"><img src="assets/img/icon/CN.png" alt="flag"> Chinese</a></li>
+                                    </ul>
+                                </li>
+                                <li class="curreny-wrap">
+                                    东校区
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="dropdown-list curreny-list">
+                                        <li><a href="#">东校区</a></li>
+                                        <li><a href="#">新校区</a></li>
+                                        <li><a href="#">老北区</a></li>
+                                        <li><a href="#">西校区</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        //mark
+                        <ul class="user-info-block">
+                            <li><a href="/schoolHelper/user/myInformation"><i class="fa fa-user-circle"></i> My Account</a></li>
+                            <li th:text="${user}"><a href="/schoolHelper/user/login"><i class="fa fa-sign-in"></i> Sign In</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header top end -->
 
-</table>
+        <!-- header middle area start -->
+        <div class="header-main-area sticky">
+            <div class="container">
+                <div class="row align-items-center position-relative">
+                    <!-- start logo area -->
+                    <div class="col-auto">
+                        <div class="logo">
+                            <a href="/schoolHelper/index.html">
+                                <img src="assets/img/logo/logo.png" alt="Brand Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- start logo area -->
 
+                    <!-- main menu area start -->
+                    <div class="col-auto position-static ml-auto">
+                        <div class="main-menu-area">
+                            <div class="main-menu">
+                                <!-- main menu navbar start -->
+                                <nav class="desktop-menu">
+                                    <ul>
+                                        <li><a href="/schoolHelper/index">Home</a></li>
+                                        <li><a href="/schoolHelper/myGoods">AS-Seller<i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown">
+                                                <li><a href="/schoolHelper/myGoods">正在展示</a></li>
+                                                <li><a href="/schoolHelper/myGoods/offLineGoodsPage">金屋藏娇</a></li>
+                                                <li><a href="/schoolHelper/myGoods/dealingGoods">大佬预定</a></li>
+                                                <li><a href="/schoolHelper/myGoods/soldGoods">终于卖了</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/schoolHelper/asBuyer/request">AS-Buyer<i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown">
+                                                <li><a href="/schoolHelper/asBuyer/order">看我淘到的宝贝</a></li>
+                                                <li><a href="/schoolHelper/asBuyer/request">同学你倒是同意呀</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/schoolHelper/user/myInformation">My Account<i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown">
+                                                <li><a href="/schoolHelper/user/myInformation">我的信息</a></li>
+                                                <li><a href="/schoolHelper/user/updateUserPage">修改个人信息</a></li>
+                                                <li><a href="/schoolHelper/user/changePasswordPage">修改密码</a></li>
+                                                <li><a href="/schoolHelper/tips/noPage">高级设置</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <!-- main menu navbar end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- main menu area end -->
+                    <!-- mini cart area start -->
+                    <div class="col-auto ml-auto">
+                        <div class="header-right">
+                            <div class="header-configure-area">
+                                <ul class="nav">
+                                    <li>
+                                        <a href="#" class="search-trigger"><i class="fa fa-search"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- mini cart area end -->
+
+                </div>
+            </div>
+        </div>
+        <!-- header middle area end -->
+    </div>
+    <!-- main header start -->
+
+
+
+    <!-- offcanvas mobile menu start -->
+    <!-- off-canvas menu start -->
+    <aside class="off-canvas-wrapper">
+        <div class="off-canvas-overlay"></div>
+        <div class="off-canvas-inner-content">
+            <div class="btn-close-off-canvas">
+                <i class="fa fa-close"></i>
+            </div>
+            <div class="off-canvas-inner">
+                <!-- offcanvas widget area start -->
+                <div class="offcanvas-widget-area">
+                    <div class="off-canvas-contact-widget">
+                        <ul>
+                            <li><i class="fa fa-mobile"></i>
+                                <a href="#">0123456789</a>
+                            </li>
+                            <li><i class="fa fa-envelope-o"></i>
+                                <a href="#">info@yourdomain.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="off-canvas-social-widget">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                    </div>
+                </div>
+                <!-- offcanvas widget area end -->
+            </div>
+        </div>
+    </aside>
+    <!-- off-canvas menu end -->
+    <!-- offcanvas mobile menu end -->
+</header>
+<!-- end Header Area -->
+
+<main>
+    <!-- slider area start -->
+    <section class="hero-slider">
+        <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide1.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-1">
+                                    <h2 class="slide-title">New</h2>
+                                    <h3 class="slide-subtitle">Sports Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide5.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-5">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide2.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-2">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide6.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-6">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide3.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-3">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide8.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-8">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide4.jpeg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-2">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- single slider item start -->
+            <div class="hero-single-slide hero-overlay">
+                <div class="hero-slider-item bg-img" data-bg="assets/img/slider/home2-slide7.jpeg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="hero-slider-content content-top slide-2">
+                                    <h2 class="slide-title">Sale</h2>
+                                    <h3 class="slide-subtitle">Running Sneakers <span>Men's like Flex</span></h3>
+                                    <a href="/schoolHelper/index" class="btn btn-large">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- slider area end -->
+
+    <!-- 分割线 -->
+    <!-- product gallery area start -->
+    <section class="product-gallery section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title text-center">
+                        <h3 class="title">大伙儿的闲置物品</h3>
+                        <h4 class="sub-title">看过来呀，这是首页，网站基本框架就是这样了，分为<br>
+                            <strong>首页</strong>显示在售的物品,以及女神的美照；<br>
+                            <strong>我的货架</strong>暂时这么叫吧，包括在架，下架，交易中，已售出；<br>
+                            <strong>我买的货</strong>as a buyer，just pay your bills, 请求交易的物品，买到的物品或者说记录；<br>
+                            <strong>个人信息</strong>as a user, we need privacy security to protect balabala, 个人信息维护与臭美
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="col-lg-12">
+                        <div class="shop-product-wrapper">
+                            <!-- shop product top wrap start -->
+                            <div class="shop-top-bar">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-7 col-md-6 order-2 order-md-1">
+                                        <div class="top-bar-left">
+                                            <div class="product-view-mode">
+                                                <a class="active" href="#" data-target="grid-view" data-toggle="tooltip" title="Grid View"><i class="fa fa-th"></i></a>
+                                                <a href="#" data-target="list-view" data-toggle="tooltip" title="List View"><i class="fa fa-list"></i></a>
+                                            </div>
+                                            <div class="product-amount">
+                                                <p>Showing 1–16 of 21 results</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6 order-1 order-md-2">
+                                        <div class="top-bar-right">
+                                            <div class="product-short">
+                                                <p>Sort By : </p>
+                                                <select class="nice-select" name="sortby">
+                                                    <option value="trending">Relevance</option>
+                                                    <option value="sales">Name (A - Z)</option>
+                                                    <option value="sales">Name (Z - A)</option>
+                                                    <option value="rating">Price (Low &gt; High)</option>
+                                                    <option value="date">Rating (Lowest)</option>
+                                                    <option value="price-asc">Model (A - Z)</option>
+                                                    <option value="price-asc">Model (Z - A)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- shop product top wrap start -->
+
+                            <!-- product item list wrapper start -->
+                            <div class="shop-product-wrap grid-view row mbn-30">
+
+                                <!-- product single item start -->
+                                <div class="col-lg-3 col-md-4 col-sm-6" th:each="goods, goodsStat:${goodslist}">
+                                    <!-- product grid start -->
+                                    <div class="product-item">
+                                        <div class="product-thumb">
+                                            <a th:href="@{/index/showGoods(id=${goods.getId()})}">
+                                                <img th:src="${goods.getPicPath()}" alt="product thumb">
+                                            </a>
+                                            <div class="button-group">
+                                                <a href="/schoolHelper/tips/noPage" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                                <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip"  title="Quick View"><i class="fa fa-eye"></i></span></a>
+                                            </div>
+                                            <div class="product-label">
+                                                <span>new</span>
+                                            </div>
+                                            <div class="discount-label">
+                                                <span>-10% Off</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-caption">
+                                                <h6 class="product-name">
+                                                    <a th:href="@{/index/showGoods(id=${goods.getId()})}">
+                                                        <span th:text="${goods.getTitle()}"></span>
+                                                    </a>
+                                                </h6>
+                                                <div class="price-box">
+                                                    <span class="price-regular"><del>$70.00</del></span>
+                                                    ￥<span class="price-old" th:text="${goods.getPrice()}"></span>元
+                                                </div>
+                                                <a class="add-to-cart" th:href="@{/buyGoods(goodsid=${goods.getId()})}"><i class="fa fa-shopping-cart"></i></a>
+                                            </div>
+                                            <div class="ratings">
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- product grid end -->
+
+                                    <!-- product list item end -->
+
+                                    <div class="product-list-item">
+                                        <div class="product-thumb">
+                                            <a th:href="@{/index/showGoods(id=${goods.getId()})}">
+                                                <img th:src="${goods.getPicPath()}" alt="product thumb">
+                                            </a>
+                                            <div class="button-group">
+                                                <a href="/schoolHelper/tips/noPage" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                                <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip"  title="Quick View"><i class="fa fa-eye"></i></span></a>
+                                            </div>
+                                            <div class="product-label">
+                                                <span>new</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-list">
+                                            <h4 class="product-name"><a href="@{/index/showGoods(id=${goods.getId()})}"><span th:text="${goods.getTitle()}"></span></a></h4>
+                                            <div class="ratings">
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                            </div>
+                                            <div class="price-box">
+                                                <span class="price-old"><del>$70.00</del></span>
+                                                ￥<span class="price-regular" th:text="${goods.getPrice()}"></span>元
+                                            </div>
+                                            <p th:text="${goods.getDetail()}">
+                                            </p>
+                                            <a th:href="@{/buyGoods(goodsid=${goods.getId()})}" class="btn btn-large hover-color">点击请求购买</a>
+                                        </div>
+                                    </div>
+                                    <!-- product list item end -->
+                                </div>
+
+                            </div>
+
+                            <!-- start pagination area -->
+                            <div class="paginatoin-area text-center">
+                                <ul class="pagination-box">
+                                    <li><a class="previous" href="#"><i class="fa fa-angle-left"></i></a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a class="next" href="#"><i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </div>
+                            <!-- end pagination area -->
+                        </div>
+                    </div>
+                    <!-- shop main wrapper end -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product gallery area end -->
+</main>
+
+    <!-- Scroll to top start -->
+    <div class="scroll-top not-visible">
+        <i class="fa fa-angle-up"></i>
+    </div>
+    <!-- Scroll to Top End -->
+
+
+    <!-- footer area start -->
+    <footer class="black-bg">
+        <!-- newsletter area start -->
+        <div class="footer-middle-area">
+            <div class="container">
+                <div class="row mtn-30">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="address-block mt-30">
+                            <div class="footer-logo">
+                                <a href="index2.html">
+                                    <img src="assets/img/logo/logo.png" alt="Brand Logo">
+                                </a>
+                            </div>
+                            <address class="address-info d-flex align-items-center">
+                                <i class="fa fa-map-marker"></i>
+                                <p><span>ADDRESS : </span><br> 北京市朝阳区 北三环东路 北京化工大学</p>
+                            </address>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <address class="address-info email mt-30">
+                            <i class="fa fa-envelope"></i>
+                            <p><span>EMAIL : </span><a href="emailto:demo@yoursite.com">1340878220@qq.com</a></p>
+                        </address>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <address class="address-info email mt-30">
+                            <i class="fa fa-phone"></i>
+                            <p><span>PHONE : </span><a href="tel:+880123456789">+86-13266666666</a></p>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-area text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="payment-method-list">
+                            <img src="assets/img/payment-2.png" alt="payment method">
+                        </div>
+                        <div class="footer-link">
+                            <a href="http://www.buct.edu.cn">BUCT</a>
+                            <a href="http://jwgl.buct.edu.cn/">教务管理系统</a>
+                            <a href="http://tree.buct.edu.cn/">校园网</a>
+                            <a href="https://www.zizhu.buct.edu.cn/1221/list.htm">北化资助中心</a>
+                            <a href="https://w.buct.edu.cn">BUCT-VPN</a>
+                        </div>
+                        <p class="copyright">
+                            Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://106.54.100.69:8080/schoolHelper/index">校园助手</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer area end -->
+
+
+
+    <!-- Quick view modal start -->
+    <div class="modal" id="quick_view">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- product details inner end -->
+                    <div class="product-details-inner">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="product-large-slider">
+                                    <div class="pro-large-img">
+                                        <img src="assets/img/product/product-details-img1.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-large-img">
+                                        <img src="assets/img/product/product-details-img2.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-large-img">
+                                        <img src="assets/img/product/product-details-img3.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-large-img">
+                                        <img src="assets/img/product/product-details-img4.jpg" alt="product-details" />
+                                    </div>
+                                </div>
+                                <div class="pro-nav slick-row-10 slick-arrow-style">
+                                    <div class="pro-nav-thumb">
+                                        <img src="assets/img/product/product-details-img1.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-nav-thumb">
+                                        <img src="assets/img/product/product-details-img2.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-nav-thumb">
+                                        <img src="assets/img/product/product-details-img3.jpg" alt="product-details" />
+                                    </div>
+                                    <div class="pro-nav-thumb">
+                                        <img src="assets/img/product/product-details-img4.jpg" alt="product-details" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="product-details-des">
+                                    <h3 class="product-name">Premium Mens Sports Lather Keds</h3>
+                                    <div class="ratings d-flex">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <div class="pro-review">
+                                            <span>1 Reviews</span>
+                                        </div>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="price-old"><del>$90.00</del></span>
+                                        <span class="price-regular">$70.00</span>
+                                    </div>
+                                    <h5 class="offer-text"><strong>Hurry up</strong>! offer ends in:</h5>
+                                    <div class="product-countdown" data-countdown="2020/01/20"></div>
+                                    <p class="pro-desc">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+                                    <div class="quantity-cart-box d-flex align-items-center">
+                                        <h6 class="option-title">qty:</h6>
+                                        <div class="quantity">
+                                            <div class="pro-qty"><input type="text" value="1"></div>
+                                        </div>
+                                        <div class="action_link">
+                                            <a class="btn btn-cart2" href="#">Add To Cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="useful-links">
+                                        <a href="#" data-toggle="tooltip" title="Compare"><i
+                                                class="fa fa-refresh"></i>compare</a>
+                                        <a href="#" data-toggle="tooltip" title="Wishlist"><i
+                                                class="fa fa-heart-o"></i>wishlist</a>
+                                    </div>
+                                    <div class="like-icon">
+                                        <a class="facebook" href="#"><i class="fa fa-facebook"></i>like</a>
+                                        <a class="twitter" href="#"><i class="fa fa-twitter"></i>tweet</a>
+                                        <a class="pinterest" href="#"><i class="fa fa-pinterest"></i>save</a>
+                                        <a class="google" href="#"><i class="fa fa-google-plus"></i>share</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- product details inner end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick view modal end -->
+
+    <!-- JS
+============================================ -->
+
+    <!-- Modernizer JS -->
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="assets/js/vendor/jquery-3.3.1.min.js"></script>
+    <!-- Popper JS -->
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <!-- slick Slider JS -->
+    <script src="assets/js/plugins/slick.min.js"></script>
+    <!-- Countdown JS -->
+    <script src="assets/js/plugins/countdown.min.js"></script>
+    <!-- Nice Select JS -->
+    <script src="assets/js/plugins/nice-select.min.js"></script>
+    <!-- jquery UI JS -->
+    <script src="assets/js/plugins/jqueryui.min.js"></script>
+    <!-- Image zoom JS -->
+    <script src="assets/js/plugins/image-zoom.min.js"></script>
+    <!-- image loaded js -->
+    <script src="assets/js/plugins/imagesloaded.pkgd.min.js"></script>
+    <!-- masonry  -->
+    <script src="assets/js/plugins/masonry.pkgd.min.js"></script>
+    <!-- mailchimp active js -->
+    <script src="assets/js/plugins/ajaxchimp.js"></script>
+    <!-- contact form dynamic js -->
+    <script src="assets/js/plugins/ajax-mail.js"></script>
+    <!-- google map api -->
+    <script src="http://ditu.google.cn/maps/api/js?key=AIzaSyCfmCVTjRI007pC1Yk2o2d_EhgkjTsFVN8"></script>
+    <!-- google map active js -->
+    <script src="assets/js/plugins/google-map.js"></script>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
 </body>
+
 </html>
