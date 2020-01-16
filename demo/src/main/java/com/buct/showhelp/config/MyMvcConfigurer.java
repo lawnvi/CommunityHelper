@@ -16,7 +16,7 @@ public class MyMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:/"+Global.ABSOLUTEPATH+"/upload/");
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+Global.ABSOLUTEPATH+"/upload/");
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         WebMvcConfigurer.super.addResourceHandlers(registry);
 

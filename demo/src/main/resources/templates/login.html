@@ -3,14 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-</head>
+    <!-- Bootstrap CSS -->
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
 <body>
-<form action="/schoolHelper/user/loginMethod" method="post">
-邮箱:<input name="email" type="text">
-密码:<input name="password" type="password">
-    <input type="submit" value="登录"/>
-</form>
-<a href="/schoolHelper/user/registerpage">注册</a>
-<a href="/schoolHelper/user/forgetPasswordPage">忘记密码</a>
+<!--<form action="/schoolHelper/user/loginMethod" method="post">-->
+<!--邮箱:<input name="email" type="text">-->
+<!--密码:<input name="password" type="password">-->
+<!--    <input type="submit" value="登录"/>-->
+<!--</form>-->
+<!--<a href="/schoolHelper/user/registerpage">注册</a>-->
+<!--<a href="/schoolHelper/user/forgetPasswordPage">忘记密码</a>-->
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1>
+                    School Helper <small>a website for helping us make source more useful</small>
+                </h1>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-8 column">
+                    <div class="carousel slide" id="carousel-447949">
+                        <ol class="carousel-indicators">
+                            <li class="active" data-slide-to="0" data-target="#carousel-447949">
+                            </li>
+                            <li data-slide-to="1" data-target="#carousel-447949">
+                            </li>
+                            <li data-slide-to="2" data-target="#carousel-447949">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="/schoolHelper/image/default_user.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>
+                                        线下社区交易
+                                    </h4>
+                                    <p>
+                                        展示、沟通、交换, 水到渠成
+                                        效率、熟人
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img alt="" src="/schoolHelper/image/default_user.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>
+                                        社区互助
+                                    </h4>
+                                    <p>
+                                        万能票圈，救救校园卡; 帮我拿个快递; 需要带/取外卖吗; 谁来救救孩子
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img alt="" src="/schoolHelper/image/default_user.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>
+                                        资源共享
+                                    </h4>
+                                    <p>
+                                        今晚主教的风儿有点儿喧嚣, 哪位大佬有往年的资料借我康康呀
+                                    </p>
+                                </div>
+                            </div>
+                        </div> <a class="left carousel-control" href="#carousel-447949" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-447949" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </div>
+                </div>
+                <div class="col-md-4 column">
+                    <h3>
+                        欢迎来到校园助手<br>
+                    </h3>
+                    <blockquote>
+                        <p>
+                            welcome to schoolHelper website, please login or register, if you forget your personal password, you can reset it by email
+                        </p>
+                        <small>schoolHelper <cite>BUCT</cite></small>
+
+                    <form class="form-horizontal" role="form" action="/schoolHelper/user/loginMethod" method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label><input type="email" name="email" class="form-control" id="exampleInputEmail1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label><input type="password" name="password" class="form-control" id="exampleInputPassword1" />
+                        </div>
+                        <button type="submit" class="btn btn-default btn-success btn-block">Sign In</button>
+
+                    </form>
+                    <span>
+                        <small>
+                        <a href="/schoolHelper/user/registerpage">Register</a>
+                            </small>
+                            <small>
+                        <a href="/schoolHelper/user/forgetPasswordPage">Reset</a>
+                            </small>
+                    </span>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

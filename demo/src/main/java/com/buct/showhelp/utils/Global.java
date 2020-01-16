@@ -21,8 +21,8 @@ public class Global {
     public static final String DEFAULT_GOODS_PICTURE = "/schoolHelper/image/default_goods.png";
     public static final String DEFAULT_USER_PATH = "/upload/picture/user";
     public static final String DEFAULT_GOODS_PATH = "/upload/picture/goods/";
-    public static final String ABSOLUTEPATH = "D://schoolHelper/";
-//    public static final String ABSOLUTEPATH = "/root/usr/local/bufferFile/schoolHelper";
+//    public static final String ABSOLUTEPATH = "D://schoolHelper/";
+    public static final String ABSOLUTEPATH = "/usr/local/programs/myBuffer/schoolHelper";
 //    String realPath = new String("D://schoolHelper/upload/picture/user/");
 
     //packageName

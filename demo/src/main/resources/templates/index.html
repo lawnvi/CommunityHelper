@@ -56,8 +56,8 @@
                                     <img src="assets/img/icon/cn.png" alt="flag"> 简体中文
                                     <i class="fa fa-angle-down"></i>
                                     <ul class="dropdown-list">
-                                        <li><a href="#"><img src="assets/img/icon/CN.png" alt="flag"> 中文</a></li>
-                                        <li><a href="#"><img src="assets/img/icon/CN.png" alt="flag"> Chinese</a></li>
+                                        <li><a href="#"><img src="assets/img/icon/cn.png" alt="flag"> 中文</a></li>
+                                        <li><a href="#"><img src="assets/img/icon/cn.png" alt="flag"> Chinese</a></li>
                                     </ul>
                                 </li>
                                 <li class="curreny-wrap">
@@ -72,10 +72,9 @@
                                 </li>
                             </ul>
                         </div>
-                        //mark
                         <ul class="user-info-block">
                             <li><a href="/schoolHelper/user/myInformation"><i class="fa fa-user-circle"></i> My Account</a></li>
-                            <li th:text="${user}"><a href="/schoolHelper/user/login"><i class="fa fa-sign-in"></i> Sign In</a></li>
+                            <li><a href="/schoolHelper/user/myInformation"><i class="fa fa-sign-in" th:text="${user}"></i> Sign In</a></li>
                         </ul>
                     </div>
                 </div>
@@ -403,7 +402,8 @@
                                             </a>
                                             <div class="button-group">
                                                 <a href="/schoolHelper/tips/noPage" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip"  title="Quick View"><i class="fa fa-eye"></i></span></a>
+<!--                                                <a href="#" data-toggle="modal" data-target="#quick_view" th:data-whatever="${goods.getPrice()}" onclick="loadDate(this)"><span data-toggle="tooltip"  title="Quick View"><i class="fa fa-eye"></i></span></a>-->
+                                                <a th:value="${goods}" data-toggle="modal" onclick="loadDate(this)"><span data-toggle="tooltip"  title="Quick View"><i class="fa fa-eye"></i></span></a>
                                             </div>
                                             <div class="product-label">
                                                 <span>new</span>
@@ -562,6 +562,8 @@
 
 
 
+
+
     <!-- Quick view modal start -->
     <div class="modal" id="quick_view">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -617,8 +619,8 @@
                                         </div>
                                     </div>
                                     <div class="price-box">
-                                        <span class="price-old"><del>$90.00</del></span>
-                                        <span class="price-regular">$70.00</span>
+                                        <span class="price-old"><del id="m_old_price" name="m_old_price">$0.00</del></span>
+                                        <span class="price-regular" id="m_now_price" name="m_now_price">$0.00</span>
                                     </div>
                                     <h5 class="offer-text"><strong>Hurry up</strong>! offer ends in:</h5>
                                     <div class="product-countdown" data-countdown="2020/01/20"></div>
@@ -690,6 +692,20 @@
     <script src="assets/js/plugins/google-map.js"></script>
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+
+    <script type="text/javascript">
+        function loadDate(op) {
+
+            var tds = $(op).innerText
+            $('#quick_view').modal('show');
+            // $('#m_old_price').innerHTML(199)
+            // $('#m_now_price').innerHTML(99)
+            console.log('test')
+            console.log(tds)
+            document.getElementById("m_now_price").innerHTML="11"
+            document.getElementById('m_old_price').innerHTML="21"
+        }
+    </script>
 </body>
 
 </html>
